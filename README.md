@@ -1,5 +1,7 @@
 # MyWeather
-Final project for my udacity Nanodegree
+Get real-time weather updates and daily weather summary with notifications for your current location with MyWeather app. Weather updates for other locations and current time in those zones are also delivered to you in an intuitive interface.
+
+## Final project for my Udacity Nanodegree
 
 ## Features
 * Local persistence using room DB
