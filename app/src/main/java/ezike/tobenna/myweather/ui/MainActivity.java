@@ -1,6 +1,6 @@
 package ezike.tobenna.myweather.ui;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import ezike.tobenna.myweather.R;
