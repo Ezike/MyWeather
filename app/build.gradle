@@ -11,9 +11,15 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField 'String', "ApiKey", ApiXuKey
+            resValue 'string', "api_key", ApiXuKey
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', "ApiKey", ApiXuKey
+            resValue 'string', "api_key", ApiXuKey
         }
     }
 
@@ -25,24 +31,61 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+    implementation "androidx.annotation:annotation:$annotation_version"
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
 
-    implementation 'androidx.annotation:annotation:1.0.2'
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.palette:palette:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    // Viewmodel and livedata
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+
+    // Room
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 
     // Material Design Library
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation "com.google.android.material:material:$material_version"
+
+    // Dagger core
+    implementation "com.google.dagger:dagger:$dagger_version"
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
+
+    //Dagger Android
+    implementation "com.google.dagger:dagger-android:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
+
+    // ThreeTenAbp
+    implementation "com.jakewharton.threetenabp:threetenabp:$threetenabp_version"
+
+    // Preference
+    implementation "androidx.preference:preference:$preference_version"
+
+    // Location
+    implementation "com.google.android.gms:play-services-location:$location_version"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+
+    // Moshi
+    implementation"com.squareup.moshi:moshi:$moshi_version"
+
+    // OkHttp3
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+
+    // Glide
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:$timber_version"
 
     // Test
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:rules:1.1.1'
-    androidTestImplementation "androidx.test.ext:junit:1.1.0"
-    androidTestImplementation 'androidx.test:core:1.1.0'
-    androidTestImplementation 'org.hamcrest:hamcrest-library:1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    testImplementation "junit:junit:$junit_version"
+    androidTestImplementation "androidx.test:rules:$rules_version"
+    androidTestImplementation "androidx.test.ext:junit:$core_version"
+    androidTestImplementation "androidx.test:core:$core_version"
+    androidTestImplementation "org.hamcrest:hamcrest-library:$hamcrest_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
 }
