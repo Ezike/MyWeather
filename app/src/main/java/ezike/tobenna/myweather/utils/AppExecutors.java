@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ezike.tobenna.myweather;
+package ezike.tobenna.myweather.utils;
 
 import android.os.Handler;
 import android.os.Looper;

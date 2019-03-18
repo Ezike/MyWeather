@@ -1,4 +1,4 @@
-package ezike.tobenna.myweather.di;
+package ezike.tobenna.myweather.di.module;
 
 import dagger.Module;
 
