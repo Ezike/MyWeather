@@ -1,12 +1,21 @@
-package ezike.tobenna.myweather.data;
+package ezike.tobenna.myweather.data.local.entity;
 
 import com.squareup.moshi.Json;
+
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+import ezike.tobenna.myweather.data.model.Condition;
 
 /**
  * @author tobennaezike
  */
-public class Current {
+@Entity(tableName = "current_weather")
+public class CurrentWeather {
 
+    @PrimaryKey
+    private int id;
     @Json(name = "feelslike_c")
     private double feelslikeC;
 
@@ -37,6 +46,7 @@ public class Current {
     @Json(name = "wind_kph")
     private double windKph;
 
+    @Embedded(prefix = "condition_")
     private Condition condition;
 
     @Json(name = "wind_mph")
@@ -47,6 +57,28 @@ public class Current {
 
     @Json(name = "vis_miles")
     private double visMiles;
+
+    private CurrentWeather(double feelslikeC, double feelslikeF, double uv, String lastUpdated, int isDay, double tempC, double tempF, double precipMm,
+                           double precipIn, double windKph, Condition condition, double windMph, double visKm, double visMiles) {
+        this.feelslikeC = feelslikeC;
+        this.feelslikeF = feelslikeF;
+        this.uv = uv;
+        this.lastUpdated = lastUpdated;
+        this.isDay = isDay;
+        this.tempC = tempC;
+        this.tempF = tempF;
+        this.precipMm = precipMm;
+        this.precipIn = precipIn;
+        this.windKph = windKph;
+        this.condition = condition;
+        this.windMph = windMph;
+        this.visKm = visKm;
+        this.visMiles = visMiles;
+    }
+
+    @Ignore
+    private CurrentWeather() {
+    }
 
     public double getFeelslikeC() {
         return feelslikeC;

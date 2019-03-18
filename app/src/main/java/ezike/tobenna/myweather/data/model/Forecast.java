@@ -1,9 +1,14 @@
-package ezike.tobenna.myweather.data;
+package ezike.tobenna.myweather.data.model;
 
 import com.squareup.moshi.Json;
 
 import java.util.List;
 
+import ezike.tobenna.myweather.data.local.entity.ForecastdayItem;
+
+/**
+ * @author tobennaezike
+ */
 public class Forecast {
 
     @Json(name = "forecastday")

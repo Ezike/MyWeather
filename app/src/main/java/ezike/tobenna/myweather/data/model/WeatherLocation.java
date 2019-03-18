@@ -1,8 +1,11 @@
-package ezike.tobenna.myweather.data;
+package ezike.tobenna.myweather.data.model;
 
 import com.squareup.moshi.Json;
 
-public class Location {
+/**
+ * @author tobennaezike
+ */
+public class WeatherLocation {
 
     @Json(name = "localtime")
     private String localtime;

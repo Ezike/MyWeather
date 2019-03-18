@@ -1,7 +1,10 @@
-package ezike.tobenna.myweather.data;
+package ezike.tobenna.myweather.data.model;
 
 import com.squareup.moshi.Json;
 
+/**
+ * @author tobennaezike
+ */
 public class Condition {
 
     @Json(name = "code")
