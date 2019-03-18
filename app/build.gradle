@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 28
@@ -61,7 +63,7 @@ dependencies {
     // Preference
     implementation "androidx.preference:preference:$preference_version"
 
-    // Location
+    // WeatherLocation
     implementation "com.google.android.gms:play-services-location:$location_version"
 
     // Retrofit
@@ -88,4 +90,8 @@ dependencies {
     androidTestImplementation "androidx.test:core:$core_version"
     androidTestImplementation "org.hamcrest:hamcrest-library:$hamcrest_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }

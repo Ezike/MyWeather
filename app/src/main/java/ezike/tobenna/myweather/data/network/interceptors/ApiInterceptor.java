@@ -5,6 +5,6 @@ import okhttp3.Interceptor;
 /**
  * @author tobennaezike
  */
-public interface ConnectivityInterceptor extends Interceptor {
+public interface ApiInterceptor extends Interceptor {
 
 }

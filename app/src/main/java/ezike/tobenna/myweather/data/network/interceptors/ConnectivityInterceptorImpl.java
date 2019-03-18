@@ -13,9 +13,11 @@ import okhttp3.Response;
 /**
  * @author tobennaezike
  */
-public class ConnectivityInterceptorImpl implements ConnectivityInterceptor {
+
+public class ConnectivityInterceptorImpl implements ApiInterceptor {
 
     private Context mContext;
+
 
     public ConnectivityInterceptorImpl(Context context) {
         mContext = context.getApplicationContext();

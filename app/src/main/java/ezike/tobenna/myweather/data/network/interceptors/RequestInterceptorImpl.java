@@ -12,7 +12,12 @@ import okhttp3.Response;
 /**
  * @author tobennaezike
  */
-public class RequestInterceptorImpl implements RequestInterceptor {
+
+public class RequestInterceptorImpl implements ApiInterceptor {
+
+    public RequestInterceptorImpl() {
+    }
+
     @NotNull
     @Override
     public Response intercept(@NotNull Chain chain) throws IOException {
