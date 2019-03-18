@@ -1,7 +1,7 @@
 package ezike.tobenna.myweather.data.network.api;
 
 import androidx.lifecycle.LiveData;
-import ezike.tobenna.myweather.data.WeatherResponse;
+import ezike.tobenna.myweather.data.model.WeatherResponse;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
