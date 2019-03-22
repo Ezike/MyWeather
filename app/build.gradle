@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: "androidx.navigation.safeargs"
 
 android {
     compileSdkVersion 28
@@ -24,6 +25,9 @@ android {
             resValue 'string', "api_key", ApiXuKey
         }
     }
+
+    dataBinding.enabled = true
+
     compileOptions {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
@@ -41,8 +45,16 @@ dependencies {
     implementation "androidx.annotation:annotation:$annotation_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
 
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
+
     // Viewmodel and livedata
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+
+    // Legacy support
+    implementation "androidx.legacy:legacy-support-v4:$legacy_support_version"
+
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
     // Room
@@ -75,7 +87,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
 
     // Moshi
-    implementation"com.squareup.moshi:moshi:$moshi_version"
+    implementation "com.squareup.moshi:moshi:$moshi_version"
 
     // OkHttp3
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
