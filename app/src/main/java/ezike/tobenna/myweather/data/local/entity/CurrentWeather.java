@@ -58,8 +58,12 @@ public class CurrentWeather {
     @Json(name = "vis_miles")
     private double visMiles;
 
-    private CurrentWeather(double feelslikeC, double feelslikeF, double uv, String lastUpdated, int isDay, double tempC, double tempF, double precipMm,
-                           double precipIn, double windKph, Condition condition, double windMph, double visKm, double visMiles) {
+    @Ignore
+    private CurrentWeather() {
+    }
+
+    public CurrentWeather(double feelslikeC, double feelslikeF, double uv, String lastUpdated, int isDay,
+                          double tempC, double tempF, double precipMm, double precipIn, double windKph, Condition condition, double windMph, double visKm, double visMiles) {
         this.feelslikeC = feelslikeC;
         this.feelslikeF = feelslikeF;
         this.uv = uv;
@@ -74,10 +78,6 @@ public class CurrentWeather {
         this.windMph = windMph;
         this.visKm = visKm;
         this.visMiles = visMiles;
-    }
-
-    @Ignore
-    private CurrentWeather() {
     }
 
     public double getFeelslikeC() {
@@ -190,5 +190,13 @@ public class CurrentWeather {
 
     public void setVisMiles(double visMiles) {
         this.visMiles = visMiles;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

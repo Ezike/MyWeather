@@ -1,6 +1,6 @@
 package ezike.tobenna.myweather.di.module;
 
-import android.app.Application;
+import android.content.Context;
 
 import javax.inject.Singleton;
 
@@ -15,19 +15,19 @@ import ezike.tobenna.myweather.data.local.WeatherDatabase;
  * @author tobennaezike
  */
 @Module
-class DatabaseModule {
+public class DatabaseModule {
 
     @Provides
     @Singleton
-    WeatherDatabase provideDatabase(@NonNull Application application) {
-        return Room.databaseBuilder(application,
+    static WeatherDatabase provideDatabase(@NonNull Context context) {
+        return Room.databaseBuilder(context,
                 WeatherDatabase.class, "weather_db")
                 .build();
     }
 
     @Provides
     @Singleton
-    CurrentWeatherDao provideCurrentWeatherDao(@NonNull WeatherDatabase appDatabase) {
+    static CurrentWeatherDao provideCurrentWeatherDao(@NonNull WeatherDatabase appDatabase) {
         return appDatabase.currentWeatherDao();
     }
 

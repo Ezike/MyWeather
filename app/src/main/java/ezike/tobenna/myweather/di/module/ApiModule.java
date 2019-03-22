@@ -25,7 +25,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
  * @author tobennaezike
  */
 @Module(includes = ClientModule.class)
-class ApiModule {
+public class ApiModule {
 
     @Provides
     @Singleton
@@ -37,8 +37,8 @@ class ApiModule {
 
     @Provides
     @Singleton
-    static OkHttpClient provideOkHttpClient(Cache cache, @Named("connectivityInterceptor") ApiInterceptor connectivityInterceptor,
-                                            @Named("RequestInterceptor") ApiInterceptor requestInterceptor) {
+    static OkHttpClient provideOkHttpClient(Cache cache, @Named("connect") ApiInterceptor connectivityInterceptor,
+                                            @Named("request") ApiInterceptor requestInterceptor) {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 

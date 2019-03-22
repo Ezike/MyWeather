@@ -13,7 +13,7 @@ public class ApiResponse<T> {
 
     private final int code;
     @Nullable
-    private final T body;
+    public final T body;
     @Nullable
     private final Throwable error;
 

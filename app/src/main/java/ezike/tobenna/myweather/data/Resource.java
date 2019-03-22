@@ -5,6 +5,10 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+/**
+ * @param <T>
+ * @author Google samples
+ */
 public class Resource<T> {
 
     @NonNull
@@ -24,14 +28,14 @@ public class Resource<T> {
     /**
      * Creates [Resource] object with `SUCCESS` status and [data].
      */
-    public static <T> Resource<T> success(@NonNull T data) {
+    static <T> Resource<T> success(@NonNull T data) {
         return new Resource<>(Status.SUCCESS, data, null);
     }
 
     /**
      * Creates [Resource] object with `ERROR` status and [message].
      */
-    public static <T> Resource<T> error(String msg, @Nullable T data) {
+    static <T> Resource<T> error(String msg, @Nullable T data) {
         return new Resource<>(Status.ERROR, data, msg);
     }
 
@@ -39,7 +43,7 @@ public class Resource<T> {
      * Creates [Resource] object with `LOADING` status to notify
      * the UI to show loading.
      */
-    public static <T> Resource<T> loading(@Nullable T data) {
+    static <T> Resource<T> loading(@Nullable T data) {
         return new Resource<>(Status.LOADING, data, null);
     }
 

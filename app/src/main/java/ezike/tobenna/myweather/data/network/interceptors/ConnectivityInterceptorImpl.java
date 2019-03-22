@@ -8,17 +8,21 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import okhttp3.Response;
 
 /**
  * @author tobennaezike
  */
 
+@Singleton
 public class ConnectivityInterceptorImpl implements ApiInterceptor {
 
     private Context mContext;
 
-
+    @Inject
     public ConnectivityInterceptorImpl(Context context) {
         mContext = context.getApplicationContext();
     }

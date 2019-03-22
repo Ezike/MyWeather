@@ -11,14 +11,14 @@ import ezike.tobenna.myweather.data.network.interceptors.RequestInterceptorImpl;
 /**
  * @author tobennaezike
  */
-@Module
+@Module(includes = AppModule.class)
 abstract class ClientModule {
 
     @Binds
-    @Named("connectivityInterceptor")
+    @Named("connect")
     abstract ApiInterceptor provideConnectivityInterceptor(ConnectivityInterceptorImpl interceptor);
 
     @Binds
-    @Named("RequestInterceptor")
+    @Named("request")
     abstract ApiInterceptor provideRequestInterceptor(RequestInterceptorImpl interceptor);
 }
