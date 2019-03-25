@@ -6,7 +6,7 @@ import javax.inject.Singleton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
-import ezike.tobenna.myweather.data.local.CurrentWeatherDao;
+import ezike.tobenna.myweather.data.local.dao.CurrentWeatherDao;
 import ezike.tobenna.myweather.data.local.entity.CurrentWeather;
 import ezike.tobenna.myweather.data.model.WeatherResponse;
 import ezike.tobenna.myweather.data.network.api.ApiResponse;

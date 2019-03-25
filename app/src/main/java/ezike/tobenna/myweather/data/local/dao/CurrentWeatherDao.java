@@ -1,4 +1,4 @@
-package ezike.tobenna.myweather.data.local;
+package ezike.tobenna.myweather.data.local.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
