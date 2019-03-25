@@ -7,6 +7,7 @@ import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import javax.inject.Inject;
 
+import androidx.preference.PreferenceManager;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
@@ -32,6 +33,7 @@ public class WeatherApplication extends Application implements HasActivityInject
         }
 
         AndroidThreeTen.init(this);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
     }
 
     @Override

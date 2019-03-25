@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/weatherFragment">
+
+    <fragment
+        android:id="@+id/weatherFragment"
+        android:name="ezike.tobenna.myweather.ui.WeatherFragment"
+        tools:layout="@layout/fragment_weather" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="ezike.tobenna.myweather.ui.SettingsFragment"
+        android:label="Settings" />
+</navigation>

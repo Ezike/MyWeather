@@ -3,6 +3,7 @@ package ezike.tobenna.myweather.data.model;
 import com.squareup.moshi.Json;
 
 import ezike.tobenna.myweather.data.local.entity.CurrentWeather;
+import ezike.tobenna.myweather.data.local.entity.WeatherLocation;
 
 /**
  * @author tobennaezike

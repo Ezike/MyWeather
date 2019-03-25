@@ -10,9 +10,10 @@ import ezike.tobenna.myweather.data.network.interceptors.RequestInterceptorImpl;
 
 /**
  * @author tobennaezike
+ * @since 20/03/19
  */
 @Module(includes = AppModule.class)
-abstract class ClientModule {
+public abstract class ClientModule {
 
     @Binds
     @Named("connect")

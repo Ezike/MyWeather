@@ -13,9 +13,12 @@ import ezike.tobenna.myweather.di.module.ApiModule;
 import ezike.tobenna.myweather.di.module.AppModule;
 import ezike.tobenna.myweather.di.module.DatabaseModule;
 import ezike.tobenna.myweather.di.module.FragmentBuildersModule;
+import ezike.tobenna.myweather.di.module.UnitModule;
+
 
 /**
  * @author tobennaezike
+ * @since 20/03/19
  */
 @Singleton
 @Component(modules = {
@@ -25,6 +28,7 @@ import ezike.tobenna.myweather.di.module.FragmentBuildersModule;
         ApiModule.class,
         DatabaseModule.class,
         AppModule.class,
+        UnitModule.class,
         ViewModelModule.class})
 public interface AppComponent {
 
