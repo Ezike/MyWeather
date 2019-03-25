@@ -12,7 +12,7 @@
             android:defaultValue="Lagos"
             android:dependency="USE_DEVICE_LOCATION"
             android:key="CUSTOM_LOCATION"
-            android:summary="The location for which the weather is displayed"
+            android:summary="Change to custom location"
             android:title="Location" />
     </PreferenceCategory>
 

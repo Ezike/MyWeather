@@ -8,10 +8,9 @@
     <fragment
         android:id="@+id/weatherFragment"
         android:name="ezike.tobenna.myweather.ui.WeatherFragment"
-        android:label="fragment_weather"
         tools:layout="@layout/fragment_weather" />
     <fragment
         android:id="@+id/settingsFragment"
         android:name="ezike.tobenna.myweather.ui.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="Settings" />
 </navigation>

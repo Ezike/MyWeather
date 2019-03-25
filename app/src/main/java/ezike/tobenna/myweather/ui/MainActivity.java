@@ -2,8 +2,6 @@ package ezike.tobenna.myweather.ui;
 
 import android.os.Bundle;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import javax.inject.Inject;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,32 +16,41 @@ import dagger.android.AndroidInjection;
 import ezike.tobenna.myweather.R;
 import ezike.tobenna.myweather.databinding.ActivityMainBinding;
 
+
 /**
  * @author tobennaezike
+ * @since 16/03/19
  */
 public class MainActivity extends AppCompatActivity {
-
-    private NavController mNavController;
-
-    private ActivityMainBinding mBinding;
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
+    private NavController mNavController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        setSupportActionBar(findViewById(R.id.toolbar));
+
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         AndroidInjection.inject(this);
+
+        binding.setLifecycleOwner(this);
+
+        setSupportActionBar(binding.toolbar);
+
+        binding.toolbar.setTitle("");
 
         mNavController = Navigation.findNavController(this, R.id.nav_host_fragment);
 
         NavigationUI.setupActionBarWithNavController(this, mNavController);
-        NavigationUI.setupWithNavController((BottomNavigationView) findViewById(R.id.bottom_nav), mNavController);
 
-        CurrentWeatherViewModel currentWeatherViewModel = ViewModelProviders.of(this, viewModelFactory).get(CurrentWeatherViewModel.class);
+        NavigationUI.setupWithNavController(binding.bottomNav, mNavController);
+
+        CurrentWeatherViewModel currentWeatherViewModel =
+                ViewModelProviders.of(this, viewModelFactory).get(CurrentWeatherViewModel.class);
+
         currentWeatherViewModel.init();
         observeWeather(currentWeatherViewModel);
     }

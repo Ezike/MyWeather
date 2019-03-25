@@ -8,11 +8,14 @@ import androidx.annotation.NonNull;
 import androidx.room.Room;
 import dagger.Module;
 import dagger.Provides;
-import ezike.tobenna.myweather.data.local.CurrentWeatherDao;
 import ezike.tobenna.myweather.data.local.WeatherDatabase;
+import ezike.tobenna.myweather.data.local.dao.CurrentWeatherDao;
+import ezike.tobenna.myweather.data.local.dao.WeatherLocationDao;
+
 
 /**
  * @author tobennaezike
+ * @since 20/03/19
  */
 @Module
 public class DatabaseModule {
@@ -31,4 +34,9 @@ public class DatabaseModule {
         return appDatabase.currentWeatherDao();
     }
 
+    @Provides
+    @Singleton
+    static WeatherLocationDao provideWeatherLocationDao(@NonNull WeatherDatabase appDatabase) {
+        return appDatabase.weatherLocationDao();
+    }
 }

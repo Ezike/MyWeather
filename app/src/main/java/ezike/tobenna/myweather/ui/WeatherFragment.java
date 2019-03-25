@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import ezike.tobenna.myweather.R;
 
@@ -26,7 +29,9 @@ public class WeatherFragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle("");
         return inflater.inflate(R.layout.fragment_weather, container, false);
+
     }
 
 }

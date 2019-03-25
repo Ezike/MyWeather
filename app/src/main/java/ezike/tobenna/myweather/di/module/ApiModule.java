@@ -39,9 +39,9 @@ public class ApiModule {
     @Singleton
     static OkHttpClient provideOkHttpClient(Cache cache, @Named("connect") ApiInterceptor connectivityInterceptor,
                                             @Named("request") ApiInterceptor requestInterceptor) {
+
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.cache(cache);
         httpClient.addInterceptor(logging);
