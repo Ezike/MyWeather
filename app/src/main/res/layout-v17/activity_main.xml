@@ -17,6 +17,7 @@
             android:textAlignment="center"
             android:layout_height="wrap_content"
             android:background="#51CEEEFC"
+            app:titleTextAppearance="@style/TextAppearance.Design.CollapsingToolbar.Expanded"
             tools:targetApi="lollipop" />
 
         <fragment

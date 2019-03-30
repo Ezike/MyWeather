@@ -13,4 +13,5 @@
     <string name="unknown_error">Unknown Error</string>
     <string name="no_internet">Check your internet connection</string>
     <string name="set_custom_location">You can set custom location in App Settings</string>
+    <string name="location_not_available">Device location not available</string>
 </resources>
