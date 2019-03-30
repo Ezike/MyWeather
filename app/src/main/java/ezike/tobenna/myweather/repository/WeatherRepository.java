@@ -13,7 +13,6 @@ import androidx.lifecycle.LiveData;
 import ezike.tobenna.myweather.data.NetworkBoundResource;
 import ezike.tobenna.myweather.data.local.LocalDataSource;
 import ezike.tobenna.myweather.data.local.entity.WeatherResponse;
-import ezike.tobenna.myweather.data.local.units.UnitSpecificWeather;
 import ezike.tobenna.myweather.data.model.WeatherLocation;
 import ezike.tobenna.myweather.data.remote.RemoteDataSource;
 import ezike.tobenna.myweather.data.remote.api.ApiResponse;
@@ -33,7 +32,6 @@ public class WeatherRepository {
 
     private RateLimiter<String> rateLimit = new RateLimiter<>(30, TimeUnit.MINUTES);
 
-    private LiveData<UnitSpecificWeather> unitSpecificWeatherLiveData;
 
     @Inject
     WeatherRepository(AppExecutors appExecutors,
@@ -46,15 +44,12 @@ public class WeatherRepository {
 
     public LiveData<Resource<WeatherResponse>> loadWeatherResponse() {
         return new NetworkBoundResource<WeatherResponse, WeatherResponse>(mExecutors) {
-
             @Override
             protected void saveCallResult(@NonNull WeatherResponse item) {
                 mLocalDataSource.saveResponse(item);
                 Timber.d("Weather response saved");
-
                 mLocalDataSource.saveWeather(item);
                 Timber.d("Weather saved to database");
-
             }
 
             @Override
@@ -77,7 +72,6 @@ public class WeatherRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<WeatherResponse>> createCall() {
-
                 mRemoteDataSource.startWeatherFetch();
                 Timber.d("Weather data fetch started");
                 return mRemoteDataSource.fetchWeather();
@@ -89,23 +83,5 @@ public class WeatherRepository {
             }
         }.asLiveData();
     }
-
-//    public LiveData<UnitSpecificWeather> getUnitWeather(boolean metric) {
-//        if (loadWeather() != null) {
-//            try {
-//                unitSpecificWeatherLiveData = mLocalDataSource.getUnitSpecificWeather(metric);
-//                Timber.d("Get unit weather success");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                Timber.d(e, "Get unit weather failed");
-//            }
-//
-//        } else {
-//            Timber.d("Get unit weather failed");
-//            return null;
-//        }
-//
-//        return unitSpecificWeatherLiveData;
-//    }
 }
 
