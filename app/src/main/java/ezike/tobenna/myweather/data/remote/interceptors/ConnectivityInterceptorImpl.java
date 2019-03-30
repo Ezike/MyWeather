@@ -1,8 +1,6 @@
-package ezike.tobenna.myweather.data.network.interceptors;
+package ezike.tobenna.myweather.data.remote.interceptors;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -11,6 +9,7 @@ import java.io.IOException;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import ezike.tobenna.myweather.utils.Utilities;
 import okhttp3.Response;
 
 /**
@@ -30,15 +29,9 @@ public class ConnectivityInterceptorImpl implements ApiInterceptor {
     @NotNull
     @Override
     public Response intercept(@NotNull Chain chain) throws IOException {
-        if (!isOnline()) {
+        if (!Utilities.isOnline(mContext)) {
             throw new IOException();
         }
         return chain.proceed(chain.request());
-    }
-
-    private Boolean isOnline() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnected();
     }
 }

@@ -3,10 +3,7 @@ package ezike.tobenna.myweather.ui;
 
 import android.os.Bundle;
 
-import java.util.Objects;
-
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceFragmentCompat;
 import ezike.tobenna.myweather.R;
@@ -24,6 +21,5 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Objects.requireNonNull(((AppCompatActivity) getActivity()).getSupportActionBar()).setTitle(getString(R.string.settings));
     }
 }

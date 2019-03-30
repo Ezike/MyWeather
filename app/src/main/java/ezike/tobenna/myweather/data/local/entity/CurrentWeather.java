@@ -4,7 +4,6 @@ import com.squareup.moshi.Json;
 
 import androidx.room.Embedded;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import ezike.tobenna.myweather.data.model.Condition;
 
@@ -16,6 +15,7 @@ public class CurrentWeather {
 
     @PrimaryKey
     private int id;
+
     @Json(name = "feelslike_c")
     private double feelslikeC;
 
@@ -57,10 +57,6 @@ public class CurrentWeather {
 
     @Json(name = "vis_miles")
     private double visMiles;
-
-    @Ignore
-    private CurrentWeather() {
-    }
 
     public CurrentWeather(double feelslikeC, double feelslikeF, double uv, String lastUpdated, int isDay,
                           double tempC, double tempF, double precipMm, double precipIn, double windKph, Condition condition, double windMph, double visKm, double visMiles) {

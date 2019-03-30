@@ -13,6 +13,8 @@ import ezike.tobenna.myweather.di.module.ApiModule;
 import ezike.tobenna.myweather.di.module.AppModule;
 import ezike.tobenna.myweather.di.module.DatabaseModule;
 import ezike.tobenna.myweather.di.module.FragmentBuildersModule;
+import ezike.tobenna.myweather.di.module.LocationModule;
+import ezike.tobenna.myweather.di.module.ServiceBuilderModule;
 import ezike.tobenna.myweather.di.module.UnitModule;
 
 
@@ -29,6 +31,8 @@ import ezike.tobenna.myweather.di.module.UnitModule;
         DatabaseModule.class,
         AppModule.class,
         UnitModule.class,
+        ServiceBuilderModule.class,
+        LocationModule.class,
         ViewModelModule.class})
 public interface AppComponent {
 

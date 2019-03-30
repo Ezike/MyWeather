@@ -1,25 +1,24 @@
-package ezike.tobenna.myweather.data.local.entity;
+package ezike.tobenna.myweather.data.model;
 
 import android.annotation.TargetApi;
 import android.os.Build;
 
 import com.squareup.moshi.Json;
 
+import org.threeten.bp.DayOfWeek;
 import org.threeten.bp.Instant;
+import org.threeten.bp.LocalDate;
 import org.threeten.bp.ZoneId;
 import org.threeten.bp.ZonedDateTime;
+import org.threeten.bp.format.TextStyle;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import java.util.Locale;
 
 /**
  * @author tobennaezike
  */
-@Entity(tableName = "weather_location")
-public class WeatherLocation {
 
-    @PrimaryKey
-    private int id;
+public class WeatherLocation {
 
     @Json(name = "localtime")
     private String localtime;
@@ -33,13 +32,13 @@ public class WeatherLocation {
     @Json(name = "name")
     private String name;
 
-    @Json(name = "longitude")
+    @Json(name = "lon")
     private double longitude;
 
     @Json(name = "region")
     private String region;
 
-    @Json(name = "latitude")
+    @Json(name = "lat")
     private double latitude;
 
     @Json(name = "tz_id")
@@ -121,19 +120,15 @@ public class WeatherLocation {
         this.tzId = tzId;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     @TargetApi(Build.VERSION_CODES.O)
     public ZonedDateTime getZonedDateTime() {
-
         Instant instant = Instant.ofEpochSecond(localtimeEpoch);
         ZoneId zoneId = ZoneId.of(tzId);
         return ZonedDateTime.ofInstant(instant, zoneId);
+    }
+
+    public String getDay() {
+        DayOfWeek dow = LocalDate.now(ZoneId.of(tzId)).getDayOfWeek();
+        return dow.getDisplayName(TextStyle.FULL, Locale.ENGLISH);
     }
 }

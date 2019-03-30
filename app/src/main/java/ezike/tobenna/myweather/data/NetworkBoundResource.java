@@ -6,8 +6,10 @@ import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
-import ezike.tobenna.myweather.data.network.api.ApiResponse;
+import ezike.tobenna.myweather.data.remote.api.ApiResponse;
 import ezike.tobenna.myweather.utils.AppExecutors;
+import ezike.tobenna.myweather.utils.Resource;
+import timber.log.Timber;
 
 /**
  * A generic class that can provide a resource backed by both the sqlite database and the network.
@@ -20,10 +22,6 @@ import ezike.tobenna.myweather.utils.AppExecutors;
  * @param <RequestType> </RequestType></ResultType>
  */
 public abstract class NetworkBoundResource<ResultType, RequestType> {
-
-    /**
-     * The final result LiveData
-     */
 
     private final AppExecutors mExecutors;
 
@@ -42,13 +40,6 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
                 result.addSource(dbSource, newData -> setValue(Resource.success(newData)));
             }
         });
-    }
-
-    @MainThread
-    private void setValue(Resource<ResultType> newValue) {
-        if (result.getValue() != newValue) {
-            result.setValue(newValue);
-        }
     }
 
     /**
@@ -76,9 +67,17 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
                 });
             } else {
                 onFetchFailed();
+                Timber.d("error %s", response.getError().getMessage());
                 result.addSource(dbSource, newData -> setValue(Resource.error(response.getError().getMessage(), newData)));
             }
         });
+    }
+
+    @MainThread
+    private void setValue(Resource<ResultType> newValue) {
+        if (result.getValue() != newValue) {
+            result.setValue(newValue);
+        }
     }
 
     // Called to save the result of the API response into the database.

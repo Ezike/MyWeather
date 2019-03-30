@@ -1,4 +1,4 @@
-package ezike.tobenna.myweather.data.network.interceptors;
+package ezike.tobenna.myweather.data.remote.interceptors;
 
 import org.jetbrains.annotations.NotNull;
 

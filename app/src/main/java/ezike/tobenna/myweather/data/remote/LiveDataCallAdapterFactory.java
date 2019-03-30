@@ -1,4 +1,4 @@
-package ezike.tobenna.myweather.data.network;
+package ezike.tobenna.myweather.data.remote;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -7,7 +7,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import androidx.lifecycle.LiveData;
-import ezike.tobenna.myweather.data.network.api.ApiResponse;
+import ezike.tobenna.myweather.data.remote.api.ApiResponse;
 import retrofit2.CallAdapter;
 import retrofit2.Retrofit;
 

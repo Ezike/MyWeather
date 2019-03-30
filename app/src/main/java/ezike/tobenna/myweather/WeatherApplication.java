@@ -2,6 +2,7 @@ package ezike.tobenna.myweather;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.Service;
 
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
@@ -11,16 +12,20 @@ import androidx.preference.PreferenceManager;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
+import dagger.android.HasServiceInjector;
 import ezike.tobenna.myweather.di.AppInjector;
 import timber.log.Timber;
 
 /**
  * @author tobennaezike
  */
-public class WeatherApplication extends Application implements HasActivityInjector {
+public class WeatherApplication extends Application implements HasActivityInjector, HasServiceInjector {
 
     @Inject
     DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
+
+    @Inject
+    DispatchingAndroidInjector<Service> dispatchingServiceInjector;
 
     @Override
     public void onCreate() {
@@ -39,5 +44,10 @@ public class WeatherApplication extends Application implements HasActivityInject
     @Override
     public AndroidInjector<Activity> activityInjector() {
         return dispatchingAndroidInjector;
+    }
+
+    @Override
+    public AndroidInjector<Service> serviceInjector() {
+        return dispatchingServiceInjector;
     }
 }

@@ -12,9 +12,9 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import ezike.tobenna.myweather.data.network.LiveDataCallAdapterFactory;
-import ezike.tobenna.myweather.data.network.api.ApiService;
-import ezike.tobenna.myweather.data.network.interceptors.ApiInterceptor;
+import ezike.tobenna.myweather.data.remote.LiveDataCallAdapterFactory;
+import ezike.tobenna.myweather.data.remote.api.ApiService;
+import ezike.tobenna.myweather.data.remote.interceptors.ApiInterceptor;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
