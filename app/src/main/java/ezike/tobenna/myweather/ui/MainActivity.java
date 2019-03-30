@@ -2,6 +2,7 @@ package ezike.tobenna.myweather.ui;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -36,10 +37,16 @@ import timber.log.Timber;
 public class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector {
 
     private static final int PERMISSION_ACCESS_COARSE_LOCATION = 98;
+
+    @Inject
+    LocationManager mLocationManager;
+
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
+
     private String[] permissions = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION};
+
     private LocationCallback mLocationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
@@ -53,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     }
 
     private NavController mNavController;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
 
         checkLocationPermission();
 
-        startLocationUpdates();
+        checkGpsEnabled();
     }
 
     @Override
@@ -82,12 +90,22 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
         return NavigationUI.navigateUp(mNavController, (DrawerLayout) null);
     }
 
+    private void checkGpsEnabled() {
+        if (Utilities.isLocationProviderEnabled(mLocationManager)) {
+            Timber.d("gps enabled");
+            startLocationUpdates();
+        } else {
+            Timber.d("gps disabled");
+            Utilities.enableLocationProvider(this, "Enable GPS",
+                    getString(R.string.gps_enable_prompt));
+        }
+    }
+
     private void startLocationUpdates() {
         LocationHandler.getLocationHandler(this, mLocationCallback);
     }
 
     public void checkLocationPermission() {
-
         if (!isPermissionGranted(Manifest.permission.ACCESS_COARSE_LOCATION) ||
                 !isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
 
@@ -97,12 +115,11 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
 
                 Utilities.showDialog(this, getString(R.string.location_permission_dialog_title),
                         getString(R.string.location_permission_prompt), (dialog, i) -> requestPermission(),
-                        (dialog, i) -> Utilities.showToast(this, getString(R.string.set_custom_location), Toast.LENGTH_LONG));
-
+                        (dialog, i) -> Utilities.showToast(this, getString(R.string.set_custom_location),
+                                Toast.LENGTH_LONG));
             } else {
                 requestPermission();
             }
-
         } else {
             Timber.d("Permission granted");
             startLocationUpdates();
@@ -119,10 +136,12 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_ACCESS_COARSE_LOCATION: {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] ==
+                        PackageManager.PERMISSION_GRANTED) {
                     startLocationUpdates();
                     Timber.d("permission granted");
                 } else {

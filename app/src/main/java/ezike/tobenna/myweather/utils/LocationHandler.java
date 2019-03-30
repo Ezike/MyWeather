@@ -13,15 +13,20 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.OnLifecycleEvent;
+import timber.log.Timber;
 
 public class LocationHandler implements LifecycleObserver {
 
     private static LocationHandler sInstance;
+
     @Inject
     FusedLocationProviderClient mFusedClient;
+
     @Inject
     Context context;
+
     private LocationRequest locationRequest;
+
     private LocationCallback mLocationCallback;
 
     private LocationHandler(LifecycleOwner lifecycleOwner,
@@ -57,6 +62,7 @@ public class LocationHandler implements LifecycleObserver {
         try {
             if (mFusedClient != null) {
                 getLocationRequest();
+                Timber.d("requesting location");
                 mFusedClient.requestLocationUpdates(locationRequest, mLocationCallback, null);
             }
         } catch (Exception e) {
@@ -68,6 +74,7 @@ public class LocationHandler implements LifecycleObserver {
     void stopLocationUpdates() {
         try {
             if (mFusedClient != null) {
+                Timber.d("stop location requests");
                 mFusedClient.removeLocationUpdates(mLocationCallback);
             }
         } catch (Exception e) {
