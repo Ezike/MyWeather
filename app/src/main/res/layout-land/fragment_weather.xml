@@ -78,13 +78,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/icon"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/day"
+                app:layout_constraintStart_toEndOf="@id/temperature"
                 app:layout_constraintTop_toTopOf="parent"
                 app:showIcon="@{condition.text}"
                 app:weatherIconColor="@color/colorPrimary"
-                app:weatherIconSize="200"
-                tools:srcCompat="@tools:sample/avatars" />
+                app:weatherIconSize="150" />
 
             <TextView
                 android:id="@+id/temperature"
@@ -95,7 +94,7 @@
                 android:text="@{String.valueOf(weather.tempC)}"
                 android:textSize="60sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/weather_icon"
+                app:layout_constraintTop_toTopOf="@+id/weather_icon"
                 tools:text="12\u2103" />
 
 
@@ -118,7 +117,7 @@
                 android:layout_marginEnd="16dp"
                 android:ellipsize="end"
                 android:text="@{location.day}"
-                android:textSize="35sp"
+                android:textSize="40sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/temperature"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="Thursday" />
@@ -130,7 +129,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="560dp" />
+            app:layout_constraintGuide_begin="250dp" />
 
         <TextView
             android:id="@+id/precipitation_text"

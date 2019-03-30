@@ -12,7 +12,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import javax.inject.Inject;
 
+import ezike.tobenna.myweather.R;
 import ezike.tobenna.myweather.data.model.WeatherLocation;
+import ezike.tobenna.myweather.utils.Utilities;
 import timber.log.Timber;
 
 public class LocationProviderImpl extends PreferenceProvider implements LocationProvider, OnSuccessListener<Location> {
@@ -45,7 +47,7 @@ public class LocationProviderImpl extends PreferenceProvider implements Location
         if (isUsingDeviceLocation()) {
             startLocationUpdates();
             if (getLastDeviceLocation() == null) {
-                Toast.makeText(mContext, "Device location not available", Toast.LENGTH_LONG).show();
+                Utilities.showToast(mContext, mContext.getString(R.string.location_not_available), Toast.LENGTH_LONG);
                     return getCustomLocationName();
                 } else {
                 String latitude = String.valueOf(getLastDeviceLocation().getLatitude());

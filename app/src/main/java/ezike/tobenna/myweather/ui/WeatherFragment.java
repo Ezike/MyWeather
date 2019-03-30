@@ -71,7 +71,9 @@ public class WeatherFragment extends Fragment implements Injectable {
     }
 
     private void observeWeather() {
+
         mCurrentWeatherViewModel.getCurrentWeather().observe(this, currentWeatherResource -> {
+
             if (currentWeatherResource.data != null) {
 
                 mBinding.setCondition(currentWeatherResource.data.getCurrent().getCondition());
@@ -87,6 +89,7 @@ public class WeatherFragment extends Fragment implements Injectable {
     }
 
     private boolean isConnected() {
+
         if (!Utilities.isOnline(Objects.requireNonNull(getActivity()))) {
             showSnackBar(getString(R.string.no_internet));
         }
