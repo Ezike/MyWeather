@@ -4,8 +4,6 @@ import com.squareup.moshi.Json;
 
 import java.util.List;
 
-import ezike.tobenna.myweather.data.local.entity.ForecastdayItem;
-
 /**
  * @author tobennaezike
  */

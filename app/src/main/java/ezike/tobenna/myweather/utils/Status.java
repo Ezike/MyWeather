@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ezike.tobenna.myweather.data;
+package ezike.tobenna.myweather.utils;
 
 /**
  * Status of a resource that is provided to the UI.

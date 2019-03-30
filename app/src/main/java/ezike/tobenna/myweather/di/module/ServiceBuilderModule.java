@@ -2,15 +2,15 @@ package ezike.tobenna.myweather.di.module;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
-import ezike.tobenna.myweather.ui.WeatherFragment;
+import ezike.tobenna.myweather.data.remote.WeatherFetchService;
 
 /**
  * @author tobennaezike
  */
-
 @Module
-public abstract class FragmentBuildersModule {
+public abstract class ServiceBuilderModule {
 
     @ContributesAndroidInjector
-    abstract WeatherFragment contributeWeatherFragmet();
+    abstract WeatherFetchService contributeWeatherFetchService();
+
 }

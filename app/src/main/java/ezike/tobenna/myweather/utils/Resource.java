@@ -1,4 +1,4 @@
-package ezike.tobenna.myweather.data;
+package ezike.tobenna.myweather.utils;
 
 import java.util.Objects;
 
@@ -28,14 +28,14 @@ public class Resource<T> {
     /**
      * Creates [Resource] object with `SUCCESS` status and [data].
      */
-    static <T> Resource<T> success(@NonNull T data) {
+    public static <T> Resource<T> success(@NonNull T data) {
         return new Resource<>(Status.SUCCESS, data, null);
     }
 
     /**
      * Creates [Resource] object with `ERROR` status and [message].
      */
-    static <T> Resource<T> error(String msg, @Nullable T data) {
+    public static <T> Resource<T> error(String msg, @Nullable T data) {
         return new Resource<>(Status.ERROR, data, msg);
     }
 
@@ -43,7 +43,7 @@ public class Resource<T> {
      * Creates [Resource] object with `LOADING` status to notify
      * the UI to show loading.
      */
-    static <T> Resource<T> loading(@Nullable T data) {
+    public static <T> Resource<T> loading(@Nullable T data) {
         return new Resource<>(Status.LOADING, data, null);
     }
 
@@ -59,7 +59,6 @@ public class Resource<T> {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(status, data, message);
     }
 }

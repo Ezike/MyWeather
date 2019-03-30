@@ -1,4 +1,4 @@
-package ezike.tobenna.myweather.data.network.api;
+package ezike.tobenna.myweather.data.remote.api;
 
 import java.io.IOException;
 

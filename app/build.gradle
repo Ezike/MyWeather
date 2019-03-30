@@ -99,6 +99,9 @@ dependencies {
     // Timber
     implementation "com.jakewharton.timber:timber:$timber_version"
 
+    // Weather icons
+    implementation "com.github.pwittchen:weathericonview:$weather_icon_version"
+
     // Test
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test:rules:$rules_version"
@@ -107,6 +110,7 @@ dependencies {
     androidTestImplementation "org.hamcrest:hamcrest-library:$hamcrest_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.cardview:cardview:1.0.0'
 }
 repositories {
     mavenCentral()

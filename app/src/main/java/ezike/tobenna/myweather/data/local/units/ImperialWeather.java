@@ -19,8 +19,8 @@ public class ImperialWeather implements UnitSpecificWeather {
     @ColumnInfo(name = "visMiles")
     private double visibilityDistance;
 
-    private ImperialWeather(double temperature, String conditionText, String conditionIconUrl, double windSpeed,
-                            double precipitationVolume, double feelsLikeTemperature, double visibilityDistance) {
+    public ImperialWeather(double temperature, String conditionText, String conditionIconUrl, double windSpeed,
+                           double precipitationVolume, double feelsLikeTemperature, double visibilityDistance) {
         this.temperature = temperature;
         this.conditionText = conditionText;
         this.conditionIconUrl = conditionIconUrl;
@@ -44,7 +44,7 @@ public class ImperialWeather implements UnitSpecificWeather {
         return conditionText;
     }
 
-    private void setConditionText(String conditionText) {
+    public void setConditionText(String conditionText) {
         this.conditionText = conditionText;
     }
 
@@ -53,7 +53,7 @@ public class ImperialWeather implements UnitSpecificWeather {
         return conditionIconUrl;
     }
 
-    private void setConditionIconUrl(String conditionIconUrl) {
+    public void setConditionIconUrl(String conditionIconUrl) {
         this.conditionIconUrl = conditionIconUrl;
     }
 
@@ -62,7 +62,7 @@ public class ImperialWeather implements UnitSpecificWeather {
         return windSpeed;
     }
 
-    private void setWindSpeed(double windSpeed) {
+    public void setWindSpeed(double windSpeed) {
         this.windSpeed = windSpeed;
     }
 
@@ -71,7 +71,7 @@ public class ImperialWeather implements UnitSpecificWeather {
         return precipitationVolume;
     }
 
-    private void setPrecipitationVolume(double precipitationVolume) {
+    public void setPrecipitationVolume(double precipitationVolume) {
         this.precipitationVolume = precipitationVolume;
     }
 
@@ -80,7 +80,7 @@ public class ImperialWeather implements UnitSpecificWeather {
         return feelsLikeTemperature;
     }
 
-    private void setFeelsLikeTemperature(double feelsLikeTemperature) {
+    public void setFeelsLikeTemperature(double feelsLikeTemperature) {
         this.feelsLikeTemperature = feelsLikeTemperature;
     }
 
@@ -89,7 +89,7 @@ public class ImperialWeather implements UnitSpecificWeather {
         return visibilityDistance;
     }
 
-    private void setVisibilityDistance(double visibilityDistance) {
+    public void setVisibilityDistance(double visibilityDistance) {
         this.visibilityDistance = visibilityDistance;
     }
 }

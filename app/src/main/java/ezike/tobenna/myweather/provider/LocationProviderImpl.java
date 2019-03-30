@@ -1,20 +1,21 @@
 package ezike.tobenna.myweather.provider;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.location.Location;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import javax.inject.Inject;
 
-import androidx.core.content.ContextCompat;
-import ezike.tobenna.myweather.data.local.entity.WeatherLocation;
+import ezike.tobenna.myweather.data.model.WeatherLocation;
+import timber.log.Timber;
 
-class LocationProviderImpl extends PreferenceProvider implements LocationProvider {
+public class LocationProviderImpl extends PreferenceProvider implements LocationProvider, OnSuccessListener<Location> {
 
     private static final String USE_DEVICE_LOCATION = "USE_DEVICE_LOCATION";
 
@@ -27,7 +28,7 @@ class LocationProviderImpl extends PreferenceProvider implements LocationProvide
     private Location deviceLocation;
 
     @Inject
-    LocationProviderImpl(Context context, FusedLocationProviderClient client) {
+    public LocationProviderImpl(Context context, FusedLocationProviderClient client) {
         super(context);
         mFusedLocationProviderClient = client;
         mContext = context;
@@ -35,57 +36,41 @@ class LocationProviderImpl extends PreferenceProvider implements LocationProvide
 
     @Override
     public boolean isLocationChanged(WeatherLocation location) {
-        boolean isChanged;
-        try {
-            isChanged = hasDeviceLocationChanged(location);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return isChanged || hasCustomLocationChanged(location);
+        Timber.d("Device location change %b", hasDeviceLocationChanged(location));
+        return hasDeviceLocationChanged(location) || hasCustomLocationChanged(location);
     }
 
     @Override
     public String getPreferredLocationString() {
         if (isUsingDeviceLocation()) {
-
-            Location deviceLocation;
-            try {
-                deviceLocation = getLastDeviceLocation();
-                if (deviceLocation == null) {
+            startLocationUpdates();
+            if (getLastDeviceLocation() == null) {
+                Toast.makeText(mContext, "Device location not available", Toast.LENGTH_LONG).show();
                     return getCustomLocationName();
                 } else {
-                    String latitude = String.valueOf(deviceLocation.getLatitude());
-                    String longitude = String.valueOf(deviceLocation.getLongitude());
+                String latitude = String.valueOf(getLastDeviceLocation().getLatitude());
+                String longitude = String.valueOf(getLastDeviceLocation().getLongitude());
+                Timber.d("Coordinates %s,%s", latitude, longitude);
                     return (latitude + "," + longitude);
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else
+        } else {
             return getCustomLocationName();
-        return null;
+        }
     }
 
     private boolean hasDeviceLocationChanged(WeatherLocation location) {
         if (!isUsingDeviceLocation()) {
             return false;
         }
-        Location deviceLocation;
-        try {
-            deviceLocation = getLastDeviceLocation();
-            if (deviceLocation != null) {
-                return false;
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
 
         double comparisonThreshold = 0.03;
-        return Math.abs(deviceLocation.getLatitude() - location.getLatitude()) > comparisonThreshold &&
-                Math.abs(deviceLocation.getLongitude() - location.getLongitude()) > comparisonThreshold;
+
+        if (getLastDeviceLocation() != null && location != null) {
+            return Math.abs(getLastDeviceLocation().getLatitude() - location.getLatitude()) > comparisonThreshold
+                    && Math.abs(getLastDeviceLocation().getLongitude() - location.getLongitude()) > comparisonThreshold;
+
+        }
+        return false;
     }
 
     private boolean hasCustomLocationChanged(WeatherLocation location) {
@@ -97,6 +82,7 @@ class LocationProviderImpl extends PreferenceProvider implements LocationProvide
     }
 
     private boolean isUsingDeviceLocation() {
+        startLocationUpdates();
         return getSharedPreferences().getBoolean(USE_DEVICE_LOCATION, true);
     }
 
@@ -104,22 +90,38 @@ class LocationProviderImpl extends PreferenceProvider implements LocationProvide
         return getSharedPreferences().getString(CUSTOM_LOCATION, null);
     }
 
+    private Location getLastDeviceLocation() {
 
-    @SuppressLint("MissingPermission")
-    private Location getLastDeviceLocation() throws Exception {
-        if (hasLocationPermission()) {
-            mFusedLocationProviderClient.getLastLocation().addOnSuccessListener((Activity) mContext, location -> {
-                if (location != null) {
-                    deviceLocation = location;
-                }
-            });
-        } else
-            throw new Exception();
+        startLocationUpdates();
+
         return deviceLocation;
     }
 
-    private boolean hasLocationPermission() {
-        return ContextCompat.checkSelfPermission(mContext,
-                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    @SuppressLint("MissingPermission")
+    private void startLocationUpdates() {
+        mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(this);
+
+        new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+                for (Location location : locationResult.getLocations()) {
+                    if (location != null) {
+                        deviceLocation = location;
+                    }
+                }
+
+            }
+        };
     }
+
+    @Override
+    public void onSuccess(Location location) {
+        if (location != null) {
+            deviceLocation = location;
+        } else {
+            Timber.d("Device Location not yet available. Please try again");
+        }
+    }
+
 }

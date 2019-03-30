@@ -11,6 +11,6 @@ import ezike.tobenna.myweather.ui.MainActivity;
 @Module
 public abstract class ActivityModule {
 
-    @ContributesAndroidInjector()
+    @ContributesAndroidInjector(modules = FragmentBuildersModule.class)
     abstract MainActivity contributeMainActivity();
 }

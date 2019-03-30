@@ -4,9 +4,9 @@ import javax.inject.Named;
 
 import dagger.Binds;
 import dagger.Module;
-import ezike.tobenna.myweather.data.network.interceptors.ApiInterceptor;
-import ezike.tobenna.myweather.data.network.interceptors.ConnectivityInterceptorImpl;
-import ezike.tobenna.myweather.data.network.interceptors.RequestInterceptorImpl;
+import ezike.tobenna.myweather.data.remote.interceptors.ApiInterceptor;
+import ezike.tobenna.myweather.data.remote.interceptors.ConnectivityInterceptorImpl;
+import ezike.tobenna.myweather.data.remote.interceptors.RequestInterceptorImpl;
 
 /**
  * @author tobennaezike

@@ -14,6 +14,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             style="@style/Widget.MaterialComponents.Toolbar"
+            android:textAlignment="center"
             android:layout_height="wrap_content" />
 
         <fragment
@@ -27,10 +28,12 @@
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_nav"
-            style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
+            style="@style/Widget.MaterialComponents.BottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:menu="@menu/bottom_nav" />
+            app:menu="@menu/bottom_nav"
+            tools:targetApi="lollipop" />
 
     </LinearLayout>
+
 </layout>

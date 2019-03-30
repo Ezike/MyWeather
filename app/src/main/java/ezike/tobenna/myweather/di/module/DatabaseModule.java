@@ -10,7 +10,7 @@ import dagger.Module;
 import dagger.Provides;
 import ezike.tobenna.myweather.data.local.WeatherDatabase;
 import ezike.tobenna.myweather.data.local.dao.CurrentWeatherDao;
-import ezike.tobenna.myweather.data.local.dao.WeatherLocationDao;
+import ezike.tobenna.myweather.data.local.dao.WeatherDao;
 
 
 /**
@@ -36,7 +36,7 @@ public class DatabaseModule {
 
     @Provides
     @Singleton
-    static WeatherLocationDao provideWeatherLocationDao(@NonNull WeatherDatabase appDatabase) {
-        return appDatabase.weatherLocationDao();
+    static WeatherDao provideWeatherResponseDao(@NonNull WeatherDatabase appDatabase) {
+        return appDatabase.weatherDao();
     }
 }

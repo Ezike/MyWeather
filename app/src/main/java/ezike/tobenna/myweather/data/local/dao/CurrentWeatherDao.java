@@ -6,6 +6,8 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import ezike.tobenna.myweather.data.local.entity.CurrentWeather;
+import ezike.tobenna.myweather.data.local.units.ImperialWeather;
+import ezike.tobenna.myweather.data.local.units.MetricWeather;
 
 /**
  * @author tobennaezike
@@ -14,8 +16,14 @@ import ezike.tobenna.myweather.data.local.entity.CurrentWeather;
 public interface CurrentWeatherDao {
 
     @Query("select * from current_weather")
-    LiveData<CurrentWeather> getImperialWeather();
+    LiveData<CurrentWeather> getCurrentWeather();
+
+    @Query("select * from current_weather")
+    LiveData<ImperialWeather> getImperialWeather();
+
+    @Query("select * from current_weather")
+    LiveData<MetricWeather> getMetricWeather();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long insertCurrentWeather(CurrentWeather weather);
+    void insertCurrentWeather(CurrentWeather weather);
 }
