@@ -15,4 +15,6 @@
     <string name="set_custom_location">You can set custom location in App Settings</string>
     <string name="location_not_available">Device location not available</string>
     <string name="gps_enable_prompt">You need to enable GPS in order to get weather updates</string>
+    <string name="ad_id">ca-app-pub-8292346947931553~5764095591</string>
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 </resources>

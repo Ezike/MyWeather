@@ -1,13 +1,13 @@
 package ezike.tobenna.myweather;
 
 import android.app.Activity;
-import android.app.Application;
 import android.app.Service;
 
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import javax.inject.Inject;
 
+import androidx.multidex.MultiDexApplication;
 import androidx.preference.PreferenceManager;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
@@ -19,7 +19,7 @@ import timber.log.Timber;
 /**
  * @author tobennaezike
  */
-public class WeatherApplication extends Application implements HasActivityInjector, HasServiceInjector {
+public class WeatherApplication extends MultiDexApplication implements HasActivityInjector, HasServiceInjector {
 
     @Inject
     DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;

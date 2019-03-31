@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
@@ -45,6 +46,7 @@ public class WeatherFragment extends Fragment implements Injectable {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         isConnected();
     }
 
@@ -55,9 +57,12 @@ public class WeatherFragment extends Fragment implements Injectable {
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather, container, false);
         mBinding.setLifecycleOwner(this);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mBinding.adView.loadAd(adRequest);
+
         initViewModel();
         return mBinding.getRoot();
     }
@@ -123,4 +128,29 @@ public class WeatherFragment extends Fragment implements Injectable {
         }
         return true;
     }
+
+    @Override
+    public void onPause() {
+        if (mBinding.adView != null) {
+            mBinding.adView.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        if (mBinding.adView != null) {
+            mBinding.adView.resume();
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mBinding.adView != null) {
+            mBinding.adView.destroy();
+        }
+        super.onDestroy();
+    }
+
 }
