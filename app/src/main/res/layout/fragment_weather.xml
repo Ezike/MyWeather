@@ -83,8 +83,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:showIcon="@{condition.text}"
                 app:weatherIconColor="@color/colorPrimary"
-                app:weatherIconSize="200"
-                tools:srcCompat="@tools:sample/avatars" />
+                app:weatherIconSize="200" />
 
             <TextView
                 android:id="@+id/temperature"
@@ -97,7 +96,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/weather_icon"
                 tools:text="12\u2103" />
-
 
             <TextView
                 android:id="@+id/condition_text"
@@ -207,12 +205,13 @@
             android:id="@+id/label_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="wind_label, precipitation_label,visibility_label"
+            app:constraint_referenced_ids="wind_label, precipitation_label,visibility_label,wind_text,visibility_text,precipitation_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:visibleGone="@{resource.data != null}" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

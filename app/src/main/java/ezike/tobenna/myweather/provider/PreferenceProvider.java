@@ -13,14 +13,11 @@ abstract class PreferenceProvider {
 
     private Context mContext;
 
-    private SharedPreferences mSharedPreferences;
-
     public PreferenceProvider(Context context) {
         mContext = context;
     }
 
     public SharedPreferences getSharedPreferences() {
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-        return mSharedPreferences;
+        return PreferenceManager.getDefaultSharedPreferences(mContext);
     }
 }

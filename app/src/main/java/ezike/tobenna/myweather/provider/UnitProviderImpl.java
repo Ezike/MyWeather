@@ -15,12 +15,10 @@ import ezike.tobenna.myweather.utils.UnitSystem;
 public class UnitProviderImpl extends PreferenceProvider implements UnitProvider {
 
     private static final String UNIT_SYSTEM = "UNIT_SYSTEM";
-    private Context mContext;
 
     @Inject
     public UnitProviderImpl(Context context) {
         super(context);
-        mContext = context;
     }
 
     @Override

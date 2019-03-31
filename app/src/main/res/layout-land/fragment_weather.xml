@@ -206,7 +206,7 @@
             android:id="@+id/label_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="wind_label, precipitation_label,visibility_label"
+            app:constraint_referenced_ids="wind_label, precipitation_label,visibility_label,wind_text,visibility_text,precipitation_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
