@@ -17,7 +17,7 @@ public class WeatherIconUtils {
             } else if (condition.contains("sun")) {
                 iconView.setIconResource(context.getString(R.string.wi_day_sunny));
             } else if (condition.contains("cloud")) {
-                iconView.setIconResource(context.getString(R.string.wi_cloud));
+                iconView.setIconResource(context.getString(R.string.wi_forecast_io_cloudy));
             } else if (condition.contains("Clear")) {
                 iconView.setIconResource(context.getString(R.string.wi_wu_clear));
             } else if (condition.contains("Overcast")) {
@@ -28,10 +28,10 @@ public class WeatherIconUtils {
                 iconView.setIconResource(context.getString(R.string.wi_fog));
             } else if (condition.contains("drizzle")) {
                 iconView.setIconResource(context.getString(R.string.wi_raindrops));
-            } else if (condition.contains("storm")) {
-                iconView.setIconResource(context.getString(R.string.wi_wu_tstorms));
             } else if (condition.contains("thunderstorm")) {
-                iconView.setIconResource(context.getString(R.string.wi_day_thunderstorm));
+                iconView.setIconResource(context.getString(R.string.wi_wu_tstorms));
+            } else if (condition.contains("Thunder")) {
+                iconView.setIconResource(context.getString(R.string.wi_thunderstorm));
             } else if (condition.contains("Cloudy")) {
                 iconView.setIconResource(context.getString(R.string.wi_forecast_io_cloudy));
             } else if (condition.contains("Fog")) {
@@ -50,6 +50,14 @@ public class WeatherIconUtils {
                 iconView.setIconResource(context.getString(R.string.wi_windy));
             } else if (condition.contains("Wind")) {
                 iconView.setIconResource(context.getString(R.string.wi_strong_wind));
+            } else if (condition.contains("storm")) {
+                iconView.setIconResource(context.getString(R.string.wi_storm_warning));
+            } else if (condition.contains("Storm")) {
+                iconView.setIconResource(context.getString(R.string.wi_forecast_io_thunderstorm));
+            } else if (condition.contains("thunder")) {
+                iconView.setIconResource(context.getString(R.string.wi_day_snow_thunderstorm));
+            } else {
+                iconView.setIconResource(context.getString(R.string.wi_forecast_io_partly_cloudy_day));
             }
         }
     }

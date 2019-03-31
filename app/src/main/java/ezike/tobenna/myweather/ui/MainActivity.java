@@ -6,6 +6,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationResult;
 
@@ -61,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
 
     private NavController mNavController;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,13 +83,14 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
         checkLocationPermission();
 
         checkGpsEnabled();
+
+        MobileAds.initialize(this, getString(R.string.ad_id));
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         return NavigationUI.navigateUp(mNavController, (DrawerLayout) null);
     }
-
     private void checkGpsEnabled() {
         if (Utilities.isLocationProviderEnabled(mLocationManager)) {
             Timber.d("gps enabled");
@@ -108,14 +109,13 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     public void checkLocationPermission() {
         if (!isPermissionGranted(Manifest.permission.ACCESS_COARSE_LOCATION) ||
                 !isPermissionGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-            Timber.d("Permission not granted");
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_COARSE_LOCATION)) {
-
                 Utilities.showDialog(this, getString(R.string.location_permission_dialog_title),
-                        getString(R.string.location_permission_prompt), (dialog, i) -> requestPermission(),
-                        (dialog, i) -> Utilities.showToast(this, getString(R.string.set_custom_location),
+                        getString(R.string.location_permission_prompt),
+                        (dialog, i) -> requestPermission(),
+                        (dialog, i) -> Utilities.showToast(this,
+                                getString(R.string.set_custom_location),
                                 Toast.LENGTH_LONG));
             } else {
                 requestPermission();

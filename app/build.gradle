@@ -1,7 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: "io.fabric"
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 apply plugin: "androidx.navigation.safeargs"
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 28
@@ -9,6 +11,7 @@ android {
         applicationId "ezike.tobenna.myweather"
         minSdkVersion 19
         targetSdkVersion 28
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -73,6 +76,15 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
     annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
 
+    // Google Ad
+    implementation "com.google.android.gms:play-services-ads:$ads_version"
+
+    // Firebase
+    implementation "com.google.firebase:firebase-core:$firebase_version"
+
+    //Crashlytics
+    implementation "com.crashlytics.sdk.android:crashlytics:$crashlytics_version"
+
     // ThreeTenAbp
     implementation "com.jakewharton.threetenabp:threetenabp:$threetenabp_version"
 
@@ -101,6 +113,9 @@ dependencies {
 
     // Weather icons
     implementation "com.github.pwittchen:weathericonview:$weather_icon_version"
+
+    // MultiDex
+    implementation "com.android.support:multidex:$multi_dex_version"
 
     // Test
     testImplementation "junit:junit:$junit_version"

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "108354523106",
+    "firebase_url": "https://myweather-a16e6.firebaseio.com",
+    "project_id": "myweather-a16e6",
+    "storage_bucket": "myweather-a16e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108354523106:android:eb6b4cb7d114737a",
+        "android_client_info": {
+          "package_name": "ezike.tobenna.myweather"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "108354523106-s6r6mtsddus8i7joh0r1e8b5toef90df.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCraUlQ_8hRIpGAh9I0HxovIRe7gIu5t6E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
