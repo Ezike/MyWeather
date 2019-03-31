@@ -20,8 +20,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import ezike.tobenna.myweather.R;
+import ezike.tobenna.myweather.data.local.entity.WeatherResponse;
 import ezike.tobenna.myweather.databinding.FragmentWeatherBinding;
 import ezike.tobenna.myweather.di.Injectable;
+import ezike.tobenna.myweather.utils.Resource;
+import ezike.tobenna.myweather.utils.Status;
 import ezike.tobenna.myweather.utils.Utilities;
 
 /**
@@ -42,26 +45,20 @@ public class WeatherFragment extends Fragment implements Injectable {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         isConnected();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
-    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather, container, false);
-
         mBinding.setLifecycleOwner(this);
-
         initViewModel();
-
         return mBinding.getRoot();
     }
 
@@ -71,44 +68,59 @@ public class WeatherFragment extends Fragment implements Injectable {
     }
 
     private void observeWeather() {
-
         mCurrentWeatherViewModel.getCurrentWeather().observe(this, currentWeatherResource -> {
-
             if (currentWeatherResource.data != null) {
-
-                mBinding.setCondition(currentWeatherResource.data.getCurrent().getCondition());
-                mBinding.setWeather(currentWeatherResource.data.getCurrent());
-                String location = (currentWeatherResource.data.getLocation().getName() + ", " +
-                        currentWeatherResource.data.getLocation().getRegion());
-                ((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar().setTitle(location);
-                mBinding.setLocation(currentWeatherResource.data.getLocation());
-
+                bindData(currentWeatherResource);
+                showError(currentWeatherResource);
             }
             mBinding.setResource(currentWeatherResource);
+
         });
     }
 
-    private boolean isConnected() {
-
-        if (!Utilities.isOnline(Objects.requireNonNull(getActivity()))) {
-            showSnackBar(getString(R.string.no_internet));
-        }
-        return true;
+    private void bindData(Resource<WeatherResponse> currentWeatherResource) {
+        mBinding.setCondition(currentWeatherResource.data.getCurrent().getCondition());
+        mBinding.setWeather(currentWeatherResource.data.getCurrent());
+        String location = (currentWeatherResource.data.getLocation().getName() + ", " +
+                currentWeatherResource.data.getLocation().getRegion());
+        ((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar().setTitle(location);
+        mBinding.setLocation(currentWeatherResource.data.getLocation());
     }
 
-    // Show SnackBar if there's no network or no data available
-    private void showSnackBar(String message) {
+    private void showError(Resource<WeatherResponse> currentWeatherResource) {
+        if (currentWeatherResource.status == Status.ERROR) {
+            if (currentWeatherResource.message != null) {
+                if (!currentWeatherResource.message.isEmpty()) {
+                    showSnackBar(currentWeatherResource.message, v -> {
+                        if (isConnected()) {
+                            retry();
+                        }
+                        isConnected();
+                    });
+                }
+            }
+        }
+    }
+
+    private void showSnackBar(String message, View.OnClickListener listener) {
         Snackbar.make(mBinding.getRoot(), message, Snackbar.LENGTH_LONG)
-                .setAction(R.string.retry, v -> {
-                    if (isConnected()) {
-                        retry();
-                    }
-                    isConnected();
-                })
+                .setAction(R.string.retry, listener)
                 .show();
     }
 
     private void retry() {
     }
 
+
+    private boolean isConnected() {
+        if (!Utilities.isOnline(Objects.requireNonNull(getActivity()))) {
+            showSnackBar(getString(R.string.no_internet), v -> {
+                if (isConnected()) {
+                    retry();
+                }
+                isConnected();
+            });
+        }
+        return true;
+    }
 }

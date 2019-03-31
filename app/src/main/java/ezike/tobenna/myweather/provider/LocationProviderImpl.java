@@ -45,7 +45,7 @@ public class LocationProviderImpl extends PreferenceProvider implements Location
     @Override
     public String getPreferredLocationString() {
         if (isUsingDeviceLocation()) {
-            startLocationUpdates();
+
             if (getLastDeviceLocation() == null) {
                 Utilities.showToast(mContext, mContext.getString(R.string.location_not_available), Toast.LENGTH_LONG);
                     return getCustomLocationName();
