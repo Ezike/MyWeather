@@ -1,14 +1,16 @@
 # MyWeather
-Get real-time weather updates and daily weather summary with notifications for your current location with MyWeather app. Weather updates for other locations and current time in those zones are also delivered to you in an intuitive interface.
+Get real-time weather updates and daily weather summary with notifications for your current weatherLocation with MyWeather app. Weather updates for other locations and current time in those zones are also delivered to you in an intuitive interface.
 
 ## Final project for my Udacity Nanodegree
 
 ## Features
-* Local persistence using room DB
+* ezike.tobenna.myweather.data.LocalTee persistence using room DB
 * MVVM architecture 
 * Material design
-* Homescreen widget
+* App Widget
 * Dependency injection with Dagger 2
+* Crash reporting with Firebase Crashlytics
+* Displays test ads
 
 ## Getting Started
 To run the project, check the prerequisites below, then clone the repo and build
@@ -21,6 +23,7 @@ To run the project, check the prerequisites below, then clone the repo and build
 *   Gradle 4.10.1
 
 ## Libraries
+*   [Navigation component](https://developer.android.com/guide/navigation)
 *   [Retrofit 2](https://github.com/square/retrofit)
 *   [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
 *   [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
@@ -28,6 +31,13 @@ To run the project, check the prerequisites below, then clone the repo and build
 *   [Glide](https://github.com/bumptech/glide)
 *   [DataBinding](https://developer.android.com/topic/libraries/data-binding)
 *   [Dagger2](https://google.github.io/dagger/users-guide)
+*   [Firebase Crashlytics](https://firebase.google.com/docs/crashlytics/get-started)
+*   [Timber](https://github.com/JakeWharton/timber)
+*   [WeatherIconView](https://github.com/pwittchen/WeatherIconView)
+*   [Moshi](https://github.com/square/moshi)
+*   [ThreeTenABP](https://github.com/JakeWharton/ThreeTenABP)
+*   [OkHttp3](https://square.github.io/okhttp)
+*   [Google Admob](https://developers.google.com/admob/android/quick-start)
 
 <h2 align="left">Screenshots</h2>
 <h4 align="center">

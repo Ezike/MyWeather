@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
         checkGpsEnabled();
 
         MobileAds.initialize(this, getString(R.string.ad_id));
+
     }
 
     @Override

@@ -1,9 +1,12 @@
 package ezike.tobenna.myweather.ui;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.material.snackbar.Snackbar;
@@ -14,6 +17,7 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -27,11 +31,17 @@ import ezike.tobenna.myweather.di.Injectable;
 import ezike.tobenna.myweather.utils.Resource;
 import ezike.tobenna.myweather.utils.Status;
 import ezike.tobenna.myweather.utils.Utilities;
+import ezike.tobenna.myweather.widget.WeatherWidgetProvider;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class WeatherFragment extends Fragment implements Injectable {
+
+    public static final String WIDGET_PREF = "ezike.tobenna.myweather.ui.widget.pref";
+    public static final String WIDGET_TEXT = "ezike.tobenna.myweather.ui.widget.text";
+    public static final String WIDGET_LOCATION = "ezike.tobenna.myweather.ui.widget.location";
+    public static final String WIDGET_ICON = "ezike.tobenna.myweather.ui.widget.icon";
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
@@ -77,13 +87,15 @@ public class WeatherFragment extends Fragment implements Injectable {
             if (currentWeatherResource.data != null) {
                 bindData(currentWeatherResource);
                 showError(currentWeatherResource);
+
+                updateWidgetData(currentWeatherResource.data);
             }
             mBinding.setResource(currentWeatherResource);
 
         });
     }
 
-    private void bindData(Resource<WeatherResponse> currentWeatherResource) {
+    private void bindData(@NonNull Resource<WeatherResponse> currentWeatherResource) {
         mBinding.setCondition(currentWeatherResource.data.getCurrent().getCondition());
         mBinding.setWeather(currentWeatherResource.data.getCurrent());
         String location = (currentWeatherResource.data.getLocation().getName() + ", " +
@@ -107,6 +119,21 @@ public class WeatherFragment extends Fragment implements Injectable {
         }
     }
 
+    private void saveToPreferences(WeatherResponse weather) {
+        SharedPreferences sharedpreferences = getActivity().getSharedPreferences(WIDGET_PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(WIDGET_TEXT, weather.getCurrent().getCondition().getText());
+        editor.putString(WIDGET_LOCATION, weather.getLocation().getRegion());
+        editor.putString(WIDGET_ICON, weather.getCurrent().getCondition().getIcon());
+        editor.apply();
+    }
+
+    private void updateWidgetData(WeatherResponse weather) {
+        saveToPreferences(weather);
+        WeatherWidgetProvider.updateWidget(getActivity());
+        Utilities.showToast(getActivity(), "widget updated", Toast.LENGTH_SHORT);
+    }
+
     private void showSnackBar(String message, View.OnClickListener listener) {
         Snackbar.make(mBinding.getRoot(), message, Snackbar.LENGTH_LONG)
                 .setAction(R.string.retry, listener)
@@ -115,7 +142,6 @@ public class WeatherFragment extends Fragment implements Injectable {
 
     private void retry() {
     }
-
 
     private boolean isConnected() {
         if (!Utilities.isOnline(Objects.requireNonNull(getActivity()))) {
