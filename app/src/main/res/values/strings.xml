@@ -17,4 +17,12 @@
     <string name="gps_enable_prompt">You need to enable GPS in order to get weather updates</string>
     <string name="ad_id">ca-app-pub-8292346947931553~5764095591</string>
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="appwidget_text">weather condition</string>
+    <string name="add_widget">Add widget</string>
+    <string name="condition_text">condition_text</string>
+    <string name="no_data">No data</string>
+    <string name="widget_background">widget background</string>
+    <string name="forecast">Forecast:</string>
+    <string name="widget_loading">Content loading</string>
+    <string name="widget_forecast">Forecast: %1$s</string>
 </resources>

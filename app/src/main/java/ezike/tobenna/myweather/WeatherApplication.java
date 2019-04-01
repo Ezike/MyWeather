@@ -39,6 +39,7 @@ public class WeatherApplication extends MultiDexApplication implements HasActivi
 
         AndroidThreeTen.init(this);
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+
     }
 
     @Override

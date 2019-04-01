@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/appwidget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/widget_margin">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/widget_background"
+        android:scaleType="matrix"
+        android:src="@drawable/widget_bg" />
+
+    <TextView
+        android:id="@+id/appwidget_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/appwidget_icon"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_toStartOf="@+id/appwidget_icon"
+        android:contentDescription="@string/appwidget_text"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="44sp"
+        android:textStyle="bold"
+        tools:text="Lagos" />
+
+
+    <TextView
+        android:id="@+id/appwidget_condition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appwidget_icon"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/appwidget_text"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        tools:text="Partly Cloudy" />
+
+    <ImageView
+        android:id="@+id/appwidget_icon"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="8dp"
+        android:contentDescription="@string/condition_text"
+        tools:srcCompat="@tools:sample/avatars" />
+
+</RelativeLayout>
