@@ -1,5 +1,6 @@
 # MyWeather
 App shows real-time weather updates for your location and any custom location you set.
+Weather forecast data is gotten from [Apixu Api](https://www.apixu.com/api.aspx)
 
 ## Final project for my Udacity Nanodegree
 
