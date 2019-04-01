@@ -42,7 +42,7 @@ public class WeatherRepository {
         mLocalDataSource = localDataSource;
     }
 
-    public LiveData<Resource<WeatherResponse>> loadWeatherResponse() {
+    public LiveData<Resource<WeatherResponse>> loadWeatherResponse(String input) {
         return new NetworkBoundResource<WeatherResponse, WeatherResponse>(mExecutors) {
             @Override
             protected void saveCallResult(@NonNull WeatherResponse item) {
@@ -60,12 +60,13 @@ public class WeatherRepository {
                     Timber.d("LOCATION %s", location.getCountry());
                     return mLocalDataSource.shouldFetch(timeElapsed) || mLocalDataSource.hasLocationChanged(location);
                 }
-                return data == null || rateLimit.shouldFetch(data.getCurrent().getLastUpdated());
+                return data == null || rateLimit.shouldFetch(input);
             }
 
             @NonNull
             @Override
             protected LiveData<WeatherResponse> loadFromDb() {
+                Timber.d("loading Weather data from database");
                 return mLocalDataSource.getWeatherResponse();
             }
 
@@ -80,6 +81,7 @@ public class WeatherRepository {
             @Override
             protected void onFetchFailed() {
                 Timber.d("Fetch failed!!");
+                rateLimit.reset(input);
             }
         }.asLiveData();
     }

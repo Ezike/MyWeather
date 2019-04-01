@@ -25,4 +25,5 @@
     <string name="forecast">Forecast:</string>
     <string name="widget_loading">Content loading</string>
     <string name="widget_forecast">Forecast: %1$s</string>
+    <string name="data_fetch_failed">Data fetch failed.\nPlease check your internet connection and try again.\n\nSwipe down to retry 🙂</string>
 </resources>

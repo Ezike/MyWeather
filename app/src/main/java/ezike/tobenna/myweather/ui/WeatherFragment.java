@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.material.snackbar.Snackbar;
@@ -20,10 +19,12 @@ import javax.inject.Inject;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import ezike.tobenna.myweather.R;
 import ezike.tobenna.myweather.data.local.entity.WeatherResponse;
 import ezike.tobenna.myweather.databinding.FragmentWeatherBinding;
@@ -36,7 +37,7 @@ import ezike.tobenna.myweather.widget.WeatherWidgetProvider;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WeatherFragment extends Fragment implements Injectable {
+public class WeatherFragment extends Fragment implements Injectable, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String WIDGET_PREF = "ezike.tobenna.myweather.ui.widget.pref";
     public static final String WIDGET_TEXT = "ezike.tobenna.myweather.ui.widget.text";
@@ -50,13 +51,11 @@ public class WeatherFragment extends Fragment implements Injectable {
 
     private FragmentWeatherBinding mBinding;
 
-    public WeatherFragment() {
-    }
+    private boolean isLoading = true;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         isConnected();
     }
 
@@ -74,6 +73,14 @@ public class WeatherFragment extends Fragment implements Injectable {
         mBinding.adView.loadAd(adRequest);
 
         initViewModel();
+
+        mBinding.swipeRefresh.setOnRefreshListener(this);
+        mBinding.swipeRefresh.setColorSchemeColors(
+                ContextCompat.getColor(getActivity(), R.color.colorPrimary),
+                ContextCompat.getColor(getActivity(), R.color.colorAccent),
+                ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark)
+        );
+
         return mBinding.getRoot();
     }
 
@@ -87,11 +94,13 @@ public class WeatherFragment extends Fragment implements Injectable {
             if (currentWeatherResource.data != null) {
                 bindData(currentWeatherResource);
                 showError(currentWeatherResource);
-
+                showSuccess(currentWeatherResource);
                 updateWidgetData(currentWeatherResource.data);
+                isLoading = false;
+            } else {
+                ((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar().setTitle("");
             }
             mBinding.setResource(currentWeatherResource);
-
         });
     }
 
@@ -108,14 +117,15 @@ public class WeatherFragment extends Fragment implements Injectable {
         if (currentWeatherResource.status == Status.ERROR) {
             if (currentWeatherResource.message != null) {
                 if (!currentWeatherResource.message.isEmpty()) {
-                    showSnackBar(currentWeatherResource.message, v -> {
-                        if (isConnected()) {
-                            retry();
-                        }
-                        isConnected();
-                    });
+                    showSnackBar(currentWeatherResource.message, v -> snackRetryAction());
                 }
             }
+        }
+    }
+
+    private void showSuccess(Resource<WeatherResponse> currentWeatherResource) {
+        if (currentWeatherResource.status == Status.SUCCESS) {
+            isLoading = false;
         }
     }
 
@@ -131,7 +141,6 @@ public class WeatherFragment extends Fragment implements Injectable {
     private void updateWidgetData(WeatherResponse weather) {
         saveToPreferences(weather);
         WeatherWidgetProvider.updateWidget(getActivity());
-        Utilities.showToast(getActivity(), "widget updated", Toast.LENGTH_SHORT);
     }
 
     private void showSnackBar(String message, View.OnClickListener listener) {
@@ -140,19 +149,22 @@ public class WeatherFragment extends Fragment implements Injectable {
                 .show();
     }
 
-    private void retry() {
+    private void retryFetch() {
+        mCurrentWeatherViewModel.retry(String.valueOf(isLoading));
     }
 
     private boolean isConnected() {
         if (!Utilities.isOnline(Objects.requireNonNull(getActivity()))) {
-            showSnackBar(getString(R.string.no_internet), v -> {
-                if (isConnected()) {
-                    retry();
-                }
-                isConnected();
-            });
+            showSnackBar(getString(R.string.no_internet), v -> snackRetryAction());
         }
         return true;
+    }
+
+    private void snackRetryAction() {
+        if (isConnected()) {
+            retryFetch();
+        }
+        isConnected();
     }
 
     @Override
@@ -179,4 +191,9 @@ public class WeatherFragment extends Fragment implements Injectable {
         super.onDestroy();
     }
 
+    @Override
+    public void onRefresh() {
+        retryFetch();
+        mBinding.swipeRefresh.setRefreshing(isLoading);
+    }
 }

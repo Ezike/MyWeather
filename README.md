@@ -1,26 +1,41 @@
 # MyWeather
-Get real-time weather updates and daily weather summary with notifications for your current weatherLocation with MyWeather app. Weather updates for other locations and current time in those zones are also delivered to you in an intuitive interface.
+App shows real-time weather updates for your location and any custom location you set.
 
 ## Final project for my Udacity Nanodegree
 
 ## Features
-* ezike.tobenna.myweather.data.LocalTee persistence using room DB
-* MVVM architecture 
+* Local persistence using Room database
+* MVVM architecture
 * Material design
-* App Widget
+* App uses `NetworkBoundResource` that handles data operations
+* Homescreen Widget that shows weather information
 * Dependency injection with Dagger 2
 * Crash reporting with Firebase Crashlytics
 * Displays test ads
 
-## Getting Started
-To run the project, check the prerequisites below, then clone the repo and build
- on Android studio or download the zip file
+### Installing
+Follow these steps if you want to get a local copy of the project.
 
 ## Prerequisites
 *   Android Studio IDE 3.0+
 *   Android SDK v28
 *   Android Build Tools v28.0.3
 *   Gradle 4.10.1
+
+#### 1. Clone or fork the repository by running the command below
+```
+git https://github.com/Ezike/MyWeather.git
+```
+
+#### 2. Import the project in AndroidStudio, and add API Key
+1.  In Android Studio, go to File -> New -> Import project
+2.  Follow the dialog for set up instructions
+3.  Get your api key from [Apixu website](https://www.apixu.com/api.aspx)
+4.  Create a local `gradle.properties` file and store the api key there
+
+```
+ApiXuKey="Your API Key here"
+```
 
 ## Libraries
 *   [Navigation component](https://developer.android.com/guide/navigation)
