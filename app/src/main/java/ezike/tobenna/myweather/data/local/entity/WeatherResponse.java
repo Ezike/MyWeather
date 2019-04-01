@@ -4,6 +4,7 @@ import com.squareup.moshi.Json;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import ezike.tobenna.myweather.data.model.CurrentWeather;
 import ezike.tobenna.myweather.data.model.Forecast;
 import ezike.tobenna.myweather.data.model.WeatherLocation;
 

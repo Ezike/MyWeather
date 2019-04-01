@@ -22,7 +22,7 @@
 
         <variable
             name="weather"
-            type="ezike.tobenna.myweather.data.local.entity.CurrentWeather" />
+            type="ezike.tobenna.myweather.data.model.CurrentWeather" />
 
     </data>
 

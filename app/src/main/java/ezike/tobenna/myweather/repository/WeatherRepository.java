@@ -48,8 +48,6 @@ public class WeatherRepository {
             protected void saveCallResult(@NonNull WeatherResponse item) {
                 mLocalDataSource.saveResponse(item);
                 Timber.d("Weather response saved");
-                mLocalDataSource.saveWeather(item);
-                Timber.d("Weather saved to database");
             }
 
             @Override

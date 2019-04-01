@@ -6,6 +6,14 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'io.fabric'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword 'valin0r'
+            storeFile file('/Users/tobennaezike/StudioProjects/MyWeather/app/myWeatherKey')
+            storePassword 'valin0r'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "ezike.tobenna.myweather"
@@ -26,24 +34,22 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField 'String', "ApiKey", ApiXuKey
             resValue 'string', "api_key", ApiXuKey
+            signingConfig signingConfigs.config
         }
     }
-
     dataBinding.enabled = true
 
     compileOptions {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
-
     defaultConfig {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "androidx.annotation:annotation:$annotation_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
@@ -57,7 +63,6 @@ dependencies {
 
     // Legacy support
     implementation "androidx.legacy:legacy-support-v4:$legacy_support_version"
-
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
     // Room

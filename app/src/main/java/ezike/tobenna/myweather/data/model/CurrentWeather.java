@@ -1,20 +1,13 @@
-package ezike.tobenna.myweather.data.local.entity;
+package ezike.tobenna.myweather.data.model;
 
 import com.squareup.moshi.Json;
 
 import androidx.room.Embedded;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-import ezike.tobenna.myweather.data.model.Condition;
 
 /**
  * @author tobennaezike
  */
-@Entity(tableName = "current_weather")
 public class CurrentWeather {
-
-    @PrimaryKey
-    private int id;
 
     @Json(name = "feelslike_c")
     private double feelslikeC;
@@ -186,13 +179,5 @@ public class CurrentWeather {
 
     public void setVisMiles(double visMiles) {
         this.visMiles = visMiles;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 }

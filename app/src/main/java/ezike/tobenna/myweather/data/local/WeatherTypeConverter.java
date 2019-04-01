@@ -5,7 +5,7 @@ import com.squareup.moshi.Moshi;
 import java.io.IOException;
 
 import androidx.room.TypeConverter;
-import ezike.tobenna.myweather.data.local.entity.CurrentWeather;
+import ezike.tobenna.myweather.data.model.CurrentWeather;
 import ezike.tobenna.myweather.data.model.Forecast;
 import ezike.tobenna.myweather.data.model.WeatherLocation;
 

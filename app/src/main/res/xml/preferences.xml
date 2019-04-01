@@ -16,13 +16,4 @@
             android:title="Location" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Units">
-        <ListPreference
-            android:defaultValue="METRIC"
-            android:entries="@array/unitSystemEntries"
-            android:entryValues="@array/unitSystemValues"
-            android:key="UNIT_SYSTEM"
-            android:summary="%s"
-            android:title="Unit system" />
-    </PreferenceCategory>
 </PreferenceScreen>
