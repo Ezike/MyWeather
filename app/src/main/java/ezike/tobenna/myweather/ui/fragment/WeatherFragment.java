@@ -77,7 +77,7 @@ public class WeatherFragment extends Fragment implements Injectable, SwipeRefres
 
         mBinding.swipeRefresh.setOnRefreshListener(this);
         mBinding.swipeRefresh.setColorSchemeColors(
-                ContextCompat.getColor(getActivity(), R.color.colorPrimary),
+                ContextCompat.getColor(Objects.requireNonNull(getActivity()), R.color.colorPrimary),
                 ContextCompat.getColor(getActivity(), R.color.colorAccent),
                 ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark)
         );
@@ -97,6 +97,7 @@ public class WeatherFragment extends Fragment implements Injectable, SwipeRefres
                 showError(currentWeatherResource);
                 showSuccess(currentWeatherResource);
                 updateWidgetData(currentWeatherResource.data);
+                isLoading = false;
 
             } else {
                 ((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar().setTitle("");
@@ -106,6 +107,7 @@ public class WeatherFragment extends Fragment implements Injectable, SwipeRefres
     }
 
     private void bindData(@NonNull Resource<WeatherResponse> currentWeatherResource) {
+        assert currentWeatherResource.data != null;
         mBinding.setCondition(currentWeatherResource.data.getCurrent().getCondition());
         mBinding.setWeather(currentWeatherResource.data.getCurrent());
         String location = (currentWeatherResource.data.getLocation().getName() + ", " +
@@ -131,7 +133,7 @@ public class WeatherFragment extends Fragment implements Injectable, SwipeRefres
     }
 
     private void saveToPreferences(WeatherResponse weather) {
-        SharedPreferences sharedpreferences = getActivity().getSharedPreferences(WIDGET_PREF, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(WIDGET_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(WIDGET_TEXT, weather.getCurrent().getCondition().getText());
         editor.putString(WIDGET_LOCATION, weather.getLocation().getRegion());
@@ -196,6 +198,7 @@ public class WeatherFragment extends Fragment implements Injectable, SwipeRefres
     public void onRefresh() {
         if (isConnected()) {
             retryFetch();
+            mBinding.swipeRefresh.setRefreshing(isLoading);
         } else {
             mBinding.swipeRefresh.setRefreshing(false);
             showSnackBar(getString(R.string.no_internet), v -> snackRetryAction());
