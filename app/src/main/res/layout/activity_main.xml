@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:fitsSystemWindows="true"
-        tools:context=".ui.MainActivity">
+        tools:context=".ui.activity.MainActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -17,7 +17,7 @@
             android:textAlignment="center"
             android:layout_height="wrap_content"
             android:background="@color/light_blue_bg"
-            app:titleTextAppearance="@style/TextAppearance.Design.CollapsingToolbar.Expanded"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             tools:targetApi="lollipop" />
 
         <fragment

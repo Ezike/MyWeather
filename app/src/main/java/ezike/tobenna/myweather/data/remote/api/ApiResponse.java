@@ -6,9 +6,6 @@ import androidx.annotation.Nullable;
 import retrofit2.Response;
 import timber.log.Timber;
 
-/**
- * @author tobennaezike
- */
 public class ApiResponse<T> {
 
     private final int code;

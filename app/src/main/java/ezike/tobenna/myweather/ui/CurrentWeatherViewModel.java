@@ -25,11 +25,11 @@ public class CurrentWeatherViewModel extends ViewModel {
         setRefreshId(value.getValue());
     }
 
-    LiveData<Resource<WeatherResponse>> getCurrentWeather() {
+    public LiveData<Resource<WeatherResponse>> getCurrentWeather() {
         return mWeather;
     }
 
-    void retry(String input) {
+    public void retry(String input) {
         setRefreshId(input);
     }
 

@@ -13,6 +13,9 @@ import ezike.tobenna.myweather.data.remote.api.ApiResponse;
 import ezike.tobenna.myweather.data.remote.api.ApiService;
 import ezike.tobenna.myweather.provider.LocationProvider;
 
+/**
+ * @author tobennaezike
+ */
 @Singleton
 public class RemoteDataSource {
 

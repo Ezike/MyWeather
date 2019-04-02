@@ -1,4 +1,4 @@
-package ezike.tobenna.myweather.ui;
+package ezike.tobenna.myweather.ui.fragment;
 
 
 import android.os.Bundle;

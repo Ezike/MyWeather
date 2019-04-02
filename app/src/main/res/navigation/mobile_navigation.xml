@@ -7,10 +7,20 @@
 
     <fragment
         android:id="@+id/weatherFragment"
-        android:name="ezike.tobenna.myweather.ui.WeatherFragment"
-        tools:layout="@layout/fragment_weather" />
+        android:name="ezike.tobenna.myweather.ui.fragment.WeatherFragment"
+        tools:layout="@layout/fragment_weather">
+        <action
+            android:id="@+id/action_weatherFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:popUpTo="@id/settingsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="ezike.tobenna.myweather.ui.SettingsFragment"
+        android:name="ezike.tobenna.myweather.ui.fragment.SettingsFragment"
         android:label="Settings" />
+
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="ezike.tobenna.myweather.ui.fragment.AboutFragment"
+        android:label="About" />
 </navigation>

@@ -8,6 +8,7 @@ import retrofit2.http.Query;
 /**
  * @author tobennaezike
  */
+
 // https://api.apixu.com/v1/forecast.json?key=ENTER_KEY&q=Los%20Angeles&days=1
 public interface ApiService {
 

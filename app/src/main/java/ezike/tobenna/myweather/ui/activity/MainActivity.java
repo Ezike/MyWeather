@@ -1,9 +1,11 @@
-package ezike.tobenna.myweather.ui;
+package ezike.tobenna.myweather.ui.activity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.MobileAds;
@@ -85,13 +87,26 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
         checkGpsEnabled();
 
         MobileAds.initialize(this, getString(R.string.ad_id));
-
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         return NavigationUI.navigateUp(mNavController, (DrawerLayout) null);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        boolean navigated = NavigationUI.onNavDestinationSelected(item, navController);
+        return navigated || super.onOptionsItemSelected(item);
+    }
+
     private void checkGpsEnabled() {
         if (Utilities.isLocationProviderEnabled(mLocationManager)) {
             Timber.d("gps enabled");
@@ -114,12 +129,12 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
                     Manifest.permission.ACCESS_COARSE_LOCATION)) {
                 Utilities.showDialog(this, getString(R.string.location_permission_dialog_title),
                         getString(R.string.location_permission_prompt),
-                        (dialog, i) -> requestPermission(),
+                        (dialog, i) -> requestPermission(permissions),
                         (dialog, i) -> Utilities.showToast(this,
                                 getString(R.string.set_custom_location),
                                 Toast.LENGTH_LONG));
             } else {
-                requestPermission();
+                requestPermission(permissions);
             }
         } else {
             Timber.d("Permission granted");
@@ -127,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
         }
     }
 
-    private void requestPermission() {
+    private void requestPermission(String[] permissions) {
         ActivityCompat.requestPermissions(this, permissions, PERMISSION_ACCESS_COARSE_LOCATION);
     }
 

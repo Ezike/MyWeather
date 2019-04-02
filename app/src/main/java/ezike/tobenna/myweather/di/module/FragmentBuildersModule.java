@@ -2,7 +2,7 @@ package ezike.tobenna.myweather.di.module;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
-import ezike.tobenna.myweather.ui.WeatherFragment;
+import ezike.tobenna.myweather.ui.fragment.WeatherFragment;
 
 /**
  * @author tobennaezike

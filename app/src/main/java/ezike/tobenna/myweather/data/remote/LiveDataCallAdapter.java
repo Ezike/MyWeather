@@ -18,13 +18,13 @@ import retrofit2.Response;
  * A Retrofit adapter that converts the Call into a LiveData of ApiResponse.
  *
  * @param <R>
- * @author tobennaezike
+ *
  */
 public class LiveDataCallAdapter<R> implements CallAdapter<R, LiveData<ApiResponse<R>>> {
 
     private final Type responseType;
 
-    public LiveDataCallAdapter(Type responseType) {
+    LiveDataCallAdapter(Type responseType) {
         this.responseType = responseType;
     }
 
@@ -52,7 +52,7 @@ public class LiveDataCallAdapter<R> implements CallAdapter<R, LiveData<ApiRespon
 
                         @Override
                         public void onFailure(@NonNull Call<R> call, @NotNull Throwable throwable) {
-                            postValue(new ApiResponse<R>(throwable));
+                            postValue(new ApiResponse<>(throwable));
                         }
                     });
                 }

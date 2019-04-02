@@ -12,14 +12,15 @@ import android.graphics.Bitmap;
 import android.os.SystemClock;
 import android.widget.RemoteViews;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.AppWidgetTarget;
 import com.bumptech.glide.request.transition.Transition;
 
+import androidx.annotation.NonNull;
 import ezike.tobenna.myweather.R;
-import ezike.tobenna.myweather.ui.MainActivity;
-import ezike.tobenna.myweather.ui.WeatherFragment;
+import ezike.tobenna.myweather.ui.activity.MainActivity;
+import ezike.tobenna.myweather.ui.fragment.WeatherFragment;
+import ezike.tobenna.myweather.utils.GlideApp;
 
 /**
  * Implementation of App Widget functionality.
@@ -64,7 +65,7 @@ public class WeatherWidgetProvider extends AppWidgetProvider {
     private static void showWeatherIcon(Context context, int appWidgetId, String iconUrl, RemoteViews views) {
         AppWidgetTarget widgetTarget = new AppWidgetTarget(context, R.id.appwidget_icon, views, appWidgetId) {
             @Override
-            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+            public void onResourceReady(@NonNull Bitmap resource, Transition<? super Bitmap> transition) {
                 super.onResourceReady(resource, transition);
             }
         };
@@ -72,7 +73,7 @@ public class WeatherWidgetProvider extends AppWidgetProvider {
         RequestOptions options = new RequestOptions().
                 override(300, 300).placeholder(R.drawable.day).error(R.drawable.day);
 
-        Glide.with(context.getApplicationContext())
+        GlideApp.with(context.getApplicationContext())
                 .asBitmap()
                 .load("http:" + iconUrl)
                 .apply(options)

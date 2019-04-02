@@ -7,13 +7,22 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:windowContentTransitions" tools:targetApi="lollipop">true</item>
+        <item name="android:windowEnterTransition" tools:targetApi="lollipop">@transition/explode
+        </item>
+        <item name="android:windowExitTransition" tools:targetApi="lollipop">@transition/slide_out
+        </item>
 
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-        <item name="android:statusBarColor" tools:targetApi="lollipop">#51CEEEFC</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/status_bar</item>
         <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="lollipop">true</item>
 
         <item name="android:fontFamily">@font/googlesans</item>
 
+    </style>
+
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.MaterialComponents.ActionBar">
+        <!-- Customize color of navigation drawer icon and back arrow -->
+        <item name="colorControlNormal">@android:color/white</item>
     </style>
 
 </resources>

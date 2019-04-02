@@ -26,4 +26,8 @@
     <string name="widget_loading">Content loading</string>
     <string name="widget_forecast">Forecast: %1$s</string>
     <string name="data_fetch_failed">Data fetch failed.\nPlease check your internet connection and try again.\n\nSwipe down to retry 🙂</string>
+    <string name="about">About</string>
+    <string name="version">Version 1.0</string>
+    <string name="myweather">MyWeather 1.0</string>
+    <string name="tempC">\u2103</string>
 </resources>

@@ -1,4 +1,4 @@
-package ezike.tobenna.myweather.ui;
+package ezike.tobenna.myweather.ui.fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -29,6 +29,7 @@ import ezike.tobenna.myweather.R;
 import ezike.tobenna.myweather.data.local.entity.WeatherResponse;
 import ezike.tobenna.myweather.databinding.FragmentWeatherBinding;
 import ezike.tobenna.myweather.di.Injectable;
+import ezike.tobenna.myweather.ui.CurrentWeatherViewModel;
 import ezike.tobenna.myweather.utils.Resource;
 import ezike.tobenna.myweather.utils.Status;
 import ezike.tobenna.myweather.utils.Utilities;
@@ -96,7 +97,7 @@ public class WeatherFragment extends Fragment implements Injectable, SwipeRefres
                 showError(currentWeatherResource);
                 showSuccess(currentWeatherResource);
                 updateWidgetData(currentWeatherResource.data);
-                isLoading = false;
+
             } else {
                 ((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar().setTitle("");
             }
@@ -193,7 +194,11 @@ public class WeatherFragment extends Fragment implements Injectable, SwipeRefres
 
     @Override
     public void onRefresh() {
-        retryFetch();
-        mBinding.swipeRefresh.setRefreshing(isLoading);
+        if (isConnected()) {
+            retryFetch();
+        } else {
+            mBinding.swipeRefresh.setRefreshing(false);
+            showSnackBar(getString(R.string.no_internet), v -> snackRetryAction());
+        }
     }
 }
