@@ -4,6 +4,11 @@ Weather forecast data is gotten from [Apixu Api](https://www.apixu.com/api.aspx)
 
 ## Final project for my Udacity Nanodegree
 
+<h2 align="center">Screenshots</h2>
+<h4 align="center">
+<img src="https://res.cloudinary.com/diixxqjcx/image/upload/v1554216525/Nexus_5x-Screenshot1.png" vspace="5" align= "center" width=275 >
+
+
 ## Features
 * Local persistence using Room database
 * MVVM architecture
@@ -39,6 +44,7 @@ ApiXuKey="Your API Key here"
 ```
 
 ## Libraries
+*   [AndroidX](https://developer.android.com/jetpack/androidx/)
 *   [Navigation component](https://developer.android.com/guide/navigation)
 *   [Retrofit 2](https://github.com/square/retrofit)
 *   [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
