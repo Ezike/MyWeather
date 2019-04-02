@@ -13,7 +13,8 @@ Weather forecast data is gotten from [Apixu Api](https://www.apixu.com/api.aspx)
 * Local persistence using Room database
 * MVVM architecture
 * Material design
-* App uses `NetworkBoundResource` that handles data operations
+* Navigation component
+* App uses `NetworkBoundResource` for data operations
 * Homescreen Widget that shows weather information
 * Dependency injection with Dagger 2
 * Crash reporting with Firebase Crashlytics
