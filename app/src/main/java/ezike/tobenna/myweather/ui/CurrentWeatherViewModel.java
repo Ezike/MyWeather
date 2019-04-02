@@ -12,16 +12,13 @@ import ezike.tobenna.myweather.utils.Resource;
 
 public class CurrentWeatherViewModel extends ViewModel {
 
-    private WeatherRepository mWeatherRepository;
-
     private MutableLiveData<String> value = new MutableLiveData<>();
 
     private LiveData<Resource<WeatherResponse>> mWeather;
 
     @Inject
     CurrentWeatherViewModel(WeatherRepository repository) {
-        mWeatherRepository = repository;
-        mWeather = Transformations.switchMap(value, input -> mWeatherRepository.loadWeatherResponse(input));
+        mWeather = Transformations.switchMap(value, repository::loadWeatherResponse);
         setRefreshId(value.getValue());
     }
 
