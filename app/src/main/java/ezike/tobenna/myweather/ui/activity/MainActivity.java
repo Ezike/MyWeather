@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
             startLocationUpdates();
         } else {
             Timber.d("gps disabled");
-            Utilities.enableLocationProvider(this, "Enable GPS",
+            Utilities.enableLocationProvider(this, getString(R.string.enable_gps),
                     getString(R.string.gps_enable_prompt));
         }
     }

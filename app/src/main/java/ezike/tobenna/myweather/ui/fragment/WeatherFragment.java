@@ -98,7 +98,6 @@ public class WeatherFragment extends Fragment implements Injectable, SwipeRefres
                 showSuccess(currentWeatherResource);
                 updateWidgetData(currentWeatherResource.data);
                 isLoading = false;
-
             } else {
                 ((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar().setTitle("");
             }
@@ -199,9 +198,7 @@ public class WeatherFragment extends Fragment implements Injectable, SwipeRefres
         if (isConnected()) {
             retryFetch();
             mBinding.swipeRefresh.setRefreshing(isLoading);
-        } else {
-            mBinding.swipeRefresh.setRefreshing(false);
-            showSnackBar(getString(R.string.no_internet), v -> snackRetryAction());
         }
+        mBinding.swipeRefresh.setRefreshing(false);
     }
 }

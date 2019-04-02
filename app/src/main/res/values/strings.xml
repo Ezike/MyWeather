@@ -30,4 +30,5 @@
     <string name="version">Version 1.0</string>
     <string name="myweather">MyWeather 1.0</string>
     <string name="tempC">\u2103</string>
+    <string name="enable_gps">Enable GPS</string>
 </resources>
