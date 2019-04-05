@@ -57,6 +57,7 @@ public class WeatherFragment extends Fragment implements Injectable, SwipeRefres
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initViewModel();
         isConnected();
     }
 
@@ -72,8 +73,6 @@ public class WeatherFragment extends Fragment implements Injectable, SwipeRefres
 
         AdRequest adRequest = new AdRequest.Builder().build();
         mBinding.adView.loadAd(adRequest);
-
-        initViewModel();
 
         mBinding.swipeRefresh.setOnRefreshListener(this);
         mBinding.swipeRefresh.setColorSchemeColors(
