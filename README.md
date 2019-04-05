@@ -29,9 +29,10 @@ Follow these steps if you want to get a local copy of the project.
 *   Android Build Tools v28.0.3
 *   Gradle 4.10.1
 
-#### 1. Clone or fork the repository by running the command below
+#### 1. Clone or fork the repository (Master Branch) by running the command below
+on your git terminal
 ```
-git https://github.com/Ezike/MyWeather.git
+git clone https://github.com/Ezike/MyWeather.git
 ```
 
 #### 2. Import the project in AndroidStudio, and add API Key
