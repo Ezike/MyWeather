@@ -3,8 +3,6 @@ App shows real-time weather updates for your location and any custom location yo
 Weather forecast data is gotten from [Apixu Api](https://www.apixu.com/api.aspx)
 
 ## Final project for my Udacity Nanodegree
-
-<h2 align="center">Screenshots</h2>
 <h4 align="center">
 <img src="https://res.cloudinary.com/diixxqjcx/image/upload/v1554216525/Nexus_5x-Screenshot1.png" vspace="5" align= "center" width=275 >
 
@@ -62,9 +60,6 @@ ApiXuKey="Your API Key here"
 *   [ThreeTenABP](https://github.com/JakeWharton/ThreeTenABP)
 *   [OkHttp3](https://square.github.io/okhttp)
 *   [Google Admob](https://developers.google.com/admob/android/quick-start)
-
-<h2 align="left">Screenshots</h2>
-<h4 align="center">
 
 ## Author
 Ezike Tobenna
