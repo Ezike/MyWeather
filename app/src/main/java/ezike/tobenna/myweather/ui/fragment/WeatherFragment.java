@@ -64,6 +64,7 @@ public class WeatherFragment extends Fragment implements Injectable, SwipeRefres
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar().setTitle("");
     }
 
     @Override
