@@ -48,7 +48,9 @@
             android:name=".data.remote.WeatherFetchService"
             android:exported="false" />
 
-        <activity android:name=".ui.activity.MainActivity" />
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>

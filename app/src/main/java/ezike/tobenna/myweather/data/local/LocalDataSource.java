@@ -11,7 +11,6 @@ import javax.inject.Singleton;
 import androidx.lifecycle.LiveData;
 import ezike.tobenna.myweather.data.local.dao.WeatherDao;
 import ezike.tobenna.myweather.data.local.entity.WeatherResponse;
-import ezike.tobenna.myweather.data.model.WeatherLocation;
 import ezike.tobenna.myweather.provider.LocationProvider;
 
 @Singleton
@@ -22,8 +21,8 @@ public class LocalDataSource {
     private LocationProvider mLocationProvider;
 
     @Inject
-    public LocalDataSource(LocationProvider locationProvider,
-                           WeatherDao weatherDao) {
+    LocalDataSource(LocationProvider locationProvider,
+                    WeatherDao weatherDao) {
         mLocationProvider = locationProvider;
         mWeatherDao = weatherDao;
     }
@@ -32,18 +31,18 @@ public class LocalDataSource {
         mWeatherDao.insertWeatherResponse(response);
     }
 
-
     public LiveData<WeatherResponse> getWeatherResponse() {
         return mWeatherDao.getWeatherResponse();
     }
 
-    public boolean hasLocationChanged(WeatherLocation location) {
-        return mLocationProvider.isLocationChanged(location);
+    public boolean hasLocationChanged(WeatherResponse response) {
+        return mLocationProvider.isLocationChanged(response.getLocation());
     }
 
     @TargetApi(Build.VERSION_CODES.O)
-    public boolean shouldFetch(ZonedDateTime lastFetchTime) {
+    public boolean shouldFetch(WeatherResponse response) {
+        ZonedDateTime locationTime = response.getLocation().getZonedDateTime();
         ZonedDateTime timeElapsed = ZonedDateTime.now().minusMinutes(30);
-        return lastFetchTime.isBefore(timeElapsed);
+        return locationTime.isBefore(timeElapsed);
     }
 }

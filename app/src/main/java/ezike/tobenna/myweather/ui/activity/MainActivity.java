@@ -99,8 +99,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        boolean navigated = NavigationUI.onNavDestinationSelected(item, navController);
+        boolean navigated = NavigationUI.onNavDestinationSelected(item, mNavController);
         return navigated || super.onOptionsItemSelected(item);
     }
 

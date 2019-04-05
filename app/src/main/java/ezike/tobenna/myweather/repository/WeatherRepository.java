@@ -1,7 +1,5 @@
 package ezike.tobenna.myweather.repository;
 
-import org.threeten.bp.ZonedDateTime;
-
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -13,7 +11,6 @@ import androidx.lifecycle.LiveData;
 import ezike.tobenna.myweather.data.NetworkBoundResource;
 import ezike.tobenna.myweather.data.local.LocalDataSource;
 import ezike.tobenna.myweather.data.local.entity.WeatherResponse;
-import ezike.tobenna.myweather.data.model.WeatherLocation;
 import ezike.tobenna.myweather.data.remote.RemoteDataSource;
 import ezike.tobenna.myweather.data.remote.api.ApiResponse;
 import ezike.tobenna.myweather.utils.AppExecutors;
@@ -53,10 +50,8 @@ public class WeatherRepository {
             @Override
             protected boolean shouldFetch(@Nullable WeatherResponse data) {
                 if (data != null) {
-                    WeatherLocation location = data.getLocation();
-                    ZonedDateTime timeElapsed = location.getZonedDateTime();
-                    Timber.d("LOCATION %s", location.getCountry());
-                    return mLocalDataSource.shouldFetch(timeElapsed) || mLocalDataSource.hasLocationChanged(location);
+                    Timber.d("LOCATION %s", data.getLocation().getCountry());
+                    return mLocalDataSource.shouldFetch(data) || mLocalDataSource.hasLocationChanged(data);
                 }
                 return data == null || rateLimit.shouldFetch(input);
             }

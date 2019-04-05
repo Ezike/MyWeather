@@ -10,8 +10,6 @@
         <item name="android:windowContentTransitions" tools:targetApi="lollipop">true</item>
         <item name="android:windowEnterTransition" tools:targetApi="lollipop">@transition/explode
         </item>
-        <item name="android:windowExitTransition" tools:targetApi="lollipop">@transition/slide_out
-        </item>
 
         <item name="android:statusBarColor" tools:targetApi="lollipop">@color/status_bar</item>
         <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="lollipop">true</item>
