@@ -2,9 +2,7 @@
 App shows real-time weather updates for your location and any custom location you set.
 Weather forecast data is gotten from [Apixu Api](https://www.apixu.com/api.aspx)
 
-## Final project for my Udacity Nanodegree
-
-<h2 align="center">Screenshots</h2>
+## Final project for Udacity Nanodegree
 <h4 align="center">
 <img src="https://res.cloudinary.com/diixxqjcx/image/upload/v1554216525/Nexus_5x-Screenshot1.png" vspace="5" align= "center" width=275 >
 
@@ -29,9 +27,10 @@ Follow these steps if you want to get a local copy of the project.
 *   Android Build Tools v28.0.3
 *   Gradle 4.10.1
 
-#### 1. Clone or fork the repository by running the command below
+#### 1. Clone or fork the repository (Master Branch) by running the command below
+on your git terminal
 ```
-git https://github.com/Ezike/MyWeather.git
+git clone https://github.com/Ezike/MyWeather.git
 ```
 
 #### 2. Import the project in AndroidStudio, and add API Key
@@ -61,9 +60,6 @@ ApiXuKey="Your API Key here"
 *   [ThreeTenABP](https://github.com/JakeWharton/ThreeTenABP)
 *   [OkHttp3](https://square.github.io/okhttp)
 *   [Google Admob](https://developers.google.com/admob/android/quick-start)
-
-<h2 align="left">Screenshots</h2>
-<h4 align="center">
 
 ## Author
 Ezike Tobenna
