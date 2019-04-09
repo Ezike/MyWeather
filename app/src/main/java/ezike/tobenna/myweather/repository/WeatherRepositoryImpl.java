@@ -19,7 +19,7 @@ import ezike.tobenna.myweather.utils.Resource;
 import timber.log.Timber;
 
 @Singleton
-public class WeatherRepositoryImpl implements WeatherRepository<Resource<WeatherResponse>> {
+public class WeatherRepositoryImpl implements WeatherRepository<LiveData<Resource<WeatherResponse>>> {
 
     private final LocalDataSource<WeatherResponse, LiveData<WeatherResponse>> mLocalDataSource;
 
