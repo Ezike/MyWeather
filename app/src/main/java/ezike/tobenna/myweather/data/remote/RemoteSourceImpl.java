@@ -1,23 +1,17 @@
 package ezike.tobenna.myweather.data.remote;
 
-import android.content.Context;
-
 import java.util.Locale;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import androidx.lifecycle.LiveData;
 import ezike.tobenna.myweather.data.local.entity.WeatherResponse;
 import ezike.tobenna.myweather.data.remote.api.ApiResponse;
 import ezike.tobenna.myweather.data.remote.api.ApiService;
+import ezike.tobenna.myweather.data.source.BaseSource;
 import ezike.tobenna.myweather.provider.LocationProvider;
 
-/**
- * @author tobennaezike
- */
-@Singleton
-public class RemoteDataSource {
+public class RemoteSourceImpl implements BaseSource<LiveData<ApiResponse<WeatherResponse>>> {
 
     private static final int DAYS = 1;
 
@@ -25,21 +19,15 @@ public class RemoteDataSource {
 
     private final LocationProvider mLocationProvider;
 
-    private Context mContext;
-
     @Inject
-    public RemoteDataSource(ApiService service,
-                            LocationProvider locationProvider, Context context) {
+    RemoteSourceImpl(ApiService service,
+                     LocationProvider locationProvider) {
         mApiService = service;
         mLocationProvider = locationProvider;
-        mContext = context;
     }
 
-    public LiveData<ApiResponse<WeatherResponse>> fetchWeather() {
+    @Override
+    public LiveData<ApiResponse<WeatherResponse>> get() {
         return mApiService.getWeather(mLocationProvider.getPreferredLocationString(), DAYS, Locale.getDefault().getLanguage());
-    }
-
-    public void startWeatherFetch() {
-        WeatherFetchService.startActionFetchWeather(mContext);
     }
 }

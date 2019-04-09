@@ -1,48 +1,15 @@
 package ezike.tobenna.myweather.data.local;
 
-import android.annotation.TargetApi;
-import android.os.Build;
+import ezike.tobenna.myweather.data.source.BaseSource;
 
-import org.threeten.bp.ZonedDateTime;
+public interface LocalDataSource<K, V> extends BaseSource {
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+    void save(K k);
 
-import androidx.lifecycle.LiveData;
-import ezike.tobenna.myweather.data.local.dao.WeatherDao;
-import ezike.tobenna.myweather.data.local.entity.WeatherResponse;
-import ezike.tobenna.myweather.provider.LocationProvider;
+    boolean hasLocationChanged(K k);
 
-@Singleton
-public class LocalDataSource {
+    boolean shouldFetch(K k);
 
-    private final WeatherDao mWeatherDao;
-
-    private LocationProvider mLocationProvider;
-
-    @Inject
-    LocalDataSource(LocationProvider locationProvider,
-                    WeatherDao weatherDao) {
-        mLocationProvider = locationProvider;
-        mWeatherDao = weatherDao;
-    }
-
-    public void saveResponse(WeatherResponse response) {
-        mWeatherDao.insertWeatherResponse(response);
-    }
-
-    public LiveData<WeatherResponse> getWeatherResponse() {
-        return mWeatherDao.getWeatherResponse();
-    }
-
-    public boolean hasLocationChanged(WeatherResponse response) {
-        return mLocationProvider.isLocationChanged(response.getLocation());
-    }
-
-    @TargetApi(Build.VERSION_CODES.O)
-    public boolean shouldFetch(WeatherResponse response) {
-        ZonedDateTime locationTime = response.getLocation().getZonedDateTime();
-        ZonedDateTime timeElapsed = ZonedDateTime.now().minusMinutes(30);
-        return locationTime.isBefore(timeElapsed);
-    }
+    @Override
+    V get();
 }

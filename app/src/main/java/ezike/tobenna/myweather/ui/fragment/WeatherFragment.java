@@ -29,7 +29,7 @@ import ezike.tobenna.myweather.R;
 import ezike.tobenna.myweather.data.local.entity.WeatherResponse;
 import ezike.tobenna.myweather.databinding.FragmentWeatherBinding;
 import ezike.tobenna.myweather.di.Injectable;
-import ezike.tobenna.myweather.ui.CurrentWeatherViewModel;
+import ezike.tobenna.myweather.ui.WeatherViewModel;
 import ezike.tobenna.myweather.utils.Resource;
 import ezike.tobenna.myweather.utils.Status;
 import ezike.tobenna.myweather.utils.Utilities;
@@ -48,7 +48,7 @@ public class WeatherFragment extends Fragment implements Injectable, SwipeRefres
     @Inject
     ViewModelProvider.Factory viewModelFactory;
 
-    private CurrentWeatherViewModel mCurrentWeatherViewModel;
+    private WeatherViewModel mWeatherViewModel;
 
     private FragmentWeatherBinding mBinding;
 
@@ -59,12 +59,12 @@ public class WeatherFragment extends Fragment implements Injectable, SwipeRefres
         super.onActivityCreated(savedInstanceState);
         initViewModel();
         isConnected();
+        ((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar().setTitle("");
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((AppCompatActivity) Objects.requireNonNull(getActivity())).getSupportActionBar().setTitle("");
     }
 
     @Override
@@ -86,12 +86,12 @@ public class WeatherFragment extends Fragment implements Injectable, SwipeRefres
     }
 
     private void initViewModel() {
-        mCurrentWeatherViewModel = ViewModelProviders.of(this, viewModelFactory).get(CurrentWeatherViewModel.class);
+        mWeatherViewModel = ViewModelProviders.of(this, viewModelFactory).get(WeatherViewModel.class);
         observeWeather();
     }
 
     private void observeWeather() {
-        mCurrentWeatherViewModel.getCurrentWeather().observe(this, currentWeatherResource -> {
+        mWeatherViewModel.getCurrentWeather().observe(this, currentWeatherResource -> {
             if (currentWeatherResource.data != null) {
                 bindData(currentWeatherResource);
                 showError(currentWeatherResource);
@@ -152,7 +152,7 @@ public class WeatherFragment extends Fragment implements Injectable, SwipeRefres
     }
 
     private void retryFetch() {
-        mCurrentWeatherViewModel.retry(String.valueOf(isLoading));
+        mWeatherViewModel.retry(String.valueOf(isLoading));
     }
 
     private boolean isConnected() {

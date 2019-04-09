@@ -30,7 +30,7 @@ public class LocationProviderImpl extends PreferenceProvider implements Location
     private Location deviceLocation;
 
     @Inject
-    public LocationProviderImpl(Context context, FusedLocationProviderClient client) {
+    LocationProviderImpl(Context context, FusedLocationProviderClient client) {
         super(context);
         mFusedLocationProviderClient = client;
         mContext = context;

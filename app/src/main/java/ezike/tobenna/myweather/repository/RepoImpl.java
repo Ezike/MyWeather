@@ -11,39 +11,38 @@ import androidx.lifecycle.LiveData;
 import ezike.tobenna.myweather.data.NetworkBoundResource;
 import ezike.tobenna.myweather.data.local.LocalDataSource;
 import ezike.tobenna.myweather.data.local.entity.WeatherResponse;
-import ezike.tobenna.myweather.data.remote.RemoteDataSource;
 import ezike.tobenna.myweather.data.remote.api.ApiResponse;
+import ezike.tobenna.myweather.data.source.BaseSource;
 import ezike.tobenna.myweather.utils.AppExecutors;
 import ezike.tobenna.myweather.utils.RateLimiter;
 import ezike.tobenna.myweather.utils.Resource;
 import timber.log.Timber;
 
 @Singleton
-public class WeatherRepository {
+public class RepoImpl implements Repo<Resource<WeatherResponse>> {
 
-    private final RemoteDataSource mRemoteDataSource;
+    private final LocalDataSource<WeatherResponse, LiveData<WeatherResponse>> mLocalDataSource;
+
+    private final BaseSource<LiveData<ApiResponse<WeatherResponse>>> mBaseSource;
 
     private final AppExecutors mExecutors;
 
-    private final LocalDataSource mLocalDataSource;
-
     private RateLimiter<String> rateLimit = new RateLimiter<>(30, TimeUnit.MINUTES);
 
-
     @Inject
-    WeatherRepository(AppExecutors appExecutors,
-                      RemoteDataSource remoteDataSource,
-                      LocalDataSource localDataSource) {
-        mRemoteDataSource = remoteDataSource;
-        mExecutors = appExecutors;
-        mLocalDataSource = localDataSource;
+    RepoImpl(AppExecutors executors, LocalDataSource dataSource, BaseSource baseSource) {
+        mExecutors = executors;
+        mLocalDataSource = dataSource;
+        mBaseSource = baseSource;
     }
 
-    public LiveData<Resource<WeatherResponse>> loadWeatherResponse(String input) {
+    @Override
+    public LiveData<Resource<WeatherResponse>> loadData(String input) {
         return new NetworkBoundResource<WeatherResponse, WeatherResponse>(mExecutors) {
+
             @Override
             protected void saveCallResult(@NonNull WeatherResponse item) {
-                mLocalDataSource.saveResponse(item);
+                mLocalDataSource.save(item);
                 Timber.d("Weather response saved");
             }
 
@@ -60,15 +59,14 @@ public class WeatherRepository {
             @Override
             protected LiveData<WeatherResponse> loadFromDb() {
                 Timber.d("loading Weather data from database");
-                return mLocalDataSource.getWeatherResponse();
+                return mLocalDataSource.get();
             }
 
             @NonNull
             @Override
             protected LiveData<ApiResponse<WeatherResponse>> createCall() {
-                mRemoteDataSource.startWeatherFetch();
                 Timber.d("Weather data fetch started");
-                return mRemoteDataSource.fetchWeather();
+                return mBaseSource.get();
             }
 
             @Override
@@ -76,7 +74,7 @@ public class WeatherRepository {
                 Timber.d("Fetch failed!!");
                 rateLimit.reset(input);
             }
+
         }.asLiveData();
     }
 }
-
