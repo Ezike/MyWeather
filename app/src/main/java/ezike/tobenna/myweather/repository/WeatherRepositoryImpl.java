@@ -19,7 +19,7 @@ import ezike.tobenna.myweather.utils.Resource;
 import timber.log.Timber;
 
 @Singleton
-public class RepoImpl implements Repo<Resource<WeatherResponse>> {
+public class WeatherRepositoryImpl implements WeatherRepository<Resource<WeatherResponse>> {
 
     private final LocalDataSource<WeatherResponse, LiveData<WeatherResponse>> mLocalDataSource;
 
@@ -30,7 +30,7 @@ public class RepoImpl implements Repo<Resource<WeatherResponse>> {
     private RateLimiter<String> rateLimit = new RateLimiter<>(30, TimeUnit.MINUTES);
 
     @Inject
-    RepoImpl(AppExecutors executors, LocalDataSource dataSource, BaseSource baseSource) {
+    WeatherRepositoryImpl(AppExecutors executors, LocalDataSource dataSource, BaseSource baseSource) {
         mExecutors = executors;
         mLocalDataSource = dataSource;
         mBaseSource = baseSource;

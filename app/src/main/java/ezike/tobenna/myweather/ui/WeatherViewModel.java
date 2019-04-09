@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 import ezike.tobenna.myweather.data.local.entity.WeatherResponse;
-import ezike.tobenna.myweather.repository.RepoImpl;
+import ezike.tobenna.myweather.repository.WeatherRepositoryImpl;
 import ezike.tobenna.myweather.utils.Resource;
 
 public class WeatherViewModel extends ViewModel {
@@ -17,7 +17,7 @@ public class WeatherViewModel extends ViewModel {
     private LiveData<Resource<WeatherResponse>> mWeather;
 
     @Inject
-    WeatherViewModel(RepoImpl repository) {
+    WeatherViewModel(WeatherRepositoryImpl repository) {
         mWeather = Transformations.switchMap(value, repository::loadData);
         setRefreshId(value.getValue());
     }
