@@ -1,7 +1,11 @@
 package ezike.tobenna.myweather.utils;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
+
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.OnLifecycleEvent;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -9,10 +13,6 @@ import com.google.android.gms.location.LocationRequest;
 
 import javax.inject.Inject;
 
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleObserver;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.OnLifecycleEvent;
 import timber.log.Timber;
 
 public class LocationHandler implements LifecycleObserver {
@@ -21,9 +21,6 @@ public class LocationHandler implements LifecycleObserver {
 
     @Inject
     FusedLocationProviderClient mFusedClient;
-
-    @Inject
-    Context context;
 
     private LocationRequest locationRequest;
 
