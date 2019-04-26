@@ -5,7 +5,6 @@ import android.app.Application;
 import com.squareup.moshi.Moshi;
 
 import java.io.File;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -47,8 +46,6 @@ public class ApiModule {
         httpClient.addInterceptor(logging);
         httpClient.addNetworkInterceptor(requestInterceptor);
         httpClient.addInterceptor(connectivityInterceptor);
-        httpClient.connectTimeout(30, TimeUnit.SECONDS);
-        httpClient.readTimeout(30, TimeUnit.SECONDS);
         return httpClient.build();
     }
 
