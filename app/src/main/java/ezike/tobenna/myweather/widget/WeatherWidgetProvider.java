@@ -12,15 +12,15 @@ import android.graphics.Bitmap;
 import android.os.SystemClock;
 import android.widget.RemoteViews;
 
+import androidx.annotation.NonNull;
+
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.AppWidgetTarget;
 import com.bumptech.glide.request.transition.Transition;
 
-import androidx.annotation.NonNull;
 import ezike.tobenna.myweather.R;
 import ezike.tobenna.myweather.ui.activity.MainActivity;
-import ezike.tobenna.myweather.ui.fragment.WeatherFragment;
-import ezike.tobenna.myweather.utils.GlideApp;
 
 /**
  * Implementation of App Widget functionality.
@@ -31,14 +31,19 @@ public class WeatherWidgetProvider extends AppWidgetProvider {
 
     private AlarmManager manager;
 
+    static final String WIDGET_PREF = "ezike.tobenna.myweather.ui.widget.pref";
+    static final String WIDGET_TEXT = "ezike.tobenna.myweather.ui.widget.text";
+    static final String WIDGET_LOCATION = "ezike.tobenna.myweather.ui.widget.location";
+    static final String WIDGET_ICON = "ezike.tobenna.myweather.ui.widget.icon";
+
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences(WeatherFragment.WIDGET_PREF, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(WIDGET_PREF, Context.MODE_PRIVATE);
         String defaultValue = context.getString(R.string.no_data);
-        String conditionText = sharedPreferences.getString(WeatherFragment.WIDGET_TEXT, defaultValue);
-        String location = sharedPreferences.getString(WeatherFragment.WIDGET_LOCATION, defaultValue);
-        String iconUrl = sharedPreferences.getString(WeatherFragment.WIDGET_ICON, defaultValue);
+        String conditionText = sharedPreferences.getString(WIDGET_TEXT, defaultValue);
+        String location = sharedPreferences.getString(WIDGET_LOCATION, defaultValue);
+        String iconUrl = sharedPreferences.getString(WIDGET_ICON, defaultValue);
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.weather_widget);
         views.setTextViewText(R.id.appwidget_location, location);
@@ -73,7 +78,7 @@ public class WeatherWidgetProvider extends AppWidgetProvider {
         RequestOptions options = new RequestOptions().
                 override(300, 300).placeholder(R.drawable.day).error(R.drawable.day);
 
-        GlideApp.with(context.getApplicationContext())
+        Glide.with(context.getApplicationContext())
                 .asBitmap()
                 .load("http:" + iconUrl)
                 .apply(options)

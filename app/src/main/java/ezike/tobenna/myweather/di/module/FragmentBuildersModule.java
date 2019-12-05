@@ -12,5 +12,5 @@ import ezike.tobenna.myweather.ui.fragment.WeatherFragment;
 public abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
-    abstract WeatherFragment contributeWeatherFragmet();
+    abstract WeatherFragment contributeWeatherFragment();
 }

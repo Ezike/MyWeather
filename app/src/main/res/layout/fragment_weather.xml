@@ -1,247 +1,234 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <import type="ezike.tobenna.myweather.utils.Status" />
-
         <variable
-            name="resource"
-            type="ezike.tobenna.myweather.utils.Resource" />
-
-        <variable
-            name="condition"
-            type="ezike.tobenna.myweather.data.model.Condition" />
-
-        <variable
-            name="location"
-            type="ezike.tobenna.myweather.data.model.WeatherLocation" />
-
-        <variable
-            name="weather"
-            type="ezike.tobenna.myweather.data.model.CurrentWeather" />
+            name="viewModel"
+            type="ezike.tobenna.myweather.ui.WeatherViewModel" />
 
     </data>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/root"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/light_blue_bg"
-            android:fitsSystemWindows="true">
-
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:indeterminate="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:targetApi="lollipop" />
-
-            <TextView
-                android:id="@+id/loading_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_8"
-                android:text="@string/loading_weather"
-                android:textSize="@dimen/text_16"
-                app:layout_constraintEnd_toEndOf="@+id/progressBar"
-                app:layout_constraintStart_toStartOf="@+id/progressBar"
-                app:layout_constraintTop_toBottomOf="@+id/progressBar" />
-
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/loading_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="progressBar,loading_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:visibleGone="@{resource.status == Status.LOADING}" />
+            android:layout_height="wrap_content">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout"
+                android:id="@+id/root"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dimen_8"
-                app:layout_constraintEnd_toStartOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:visibleGone="@{resource.data != null}">
+                android:layout_height="match_parent"
+                android:background="@color/light_blue_bg"
+                android:fitsSystemWindows="true">
 
-                <com.github.pwittchen.weathericonview.WeatherIconView
-                    android:id="@+id/weather_icon"
+                <ProgressBar
+                    android:id="@+id/progressBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/icon"
+                    android:indeterminate="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:showIcon="@{condition.text}"
-                    app:weatherIconColor="@color/colorPrimary"
-                    app:weatherIconSize="200" />
+                    tools:targetApi="lollipop" />
 
                 <TextView
-                    android:id="@+id/temperature"
+                    android:id="@+id/loading_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_16"
-                    android:layout_marginTop="@dimen/dimen_16"
-                    android:text="@{String.valueOf(weather.tempC).concat(@string/tempC)}"
-                    android:textSize="@dimen/text_60"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/weather_icon"
-                    tools:text="12\u2103" />
+                    android:layout_marginTop="@dimen/dimen_8"
+                    android:text="@string/loading_weather"
+                    android:textSize="@dimen/text_16"
+                    app:layout_constraintEnd_toEndOf="@+id/progressBar"
+                    app:layout_constraintStart_toStartOf="@+id/progressBar"
+                    app:layout_constraintTop_toBottomOf="@+id/progressBar" />
 
-                <TextView
-                    android:id="@+id/condition_text"
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/loading_group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_32"
-                    android:maxEms="6"
-                    android:text="@{condition.text}"
-                    android:textSize="@dimen/text_25"
-                    app:layout_constraintStart_toStartOf="@+id/temperature"
-                    app:layout_constraintTop_toBottomOf="@+id/temperature"
-                    tools:text="Cloudy" />
-
-                <TextView
-                    android:id="@+id/day"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/dimen_16"
-                    android:ellipsize="end"
-                    android:text="@{location.day}"
-                    android:textSize="@dimen/text_35"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/temperature"
+                    app:constraint_referenced_ids="progressBar,loading_view"
                     app:layout_constraintEnd_toEndOf="parent"
-                    tools:text="Thursday" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:showLoading="@{viewModel.weatherLiveData}" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_8"
+                    app:layout_constraintEnd_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:showSuccess="@{viewModel.weatherLiveData}">
+
+                    <com.github.pwittchen.weathericonview.WeatherIconView
+                        android:id="@+id/weather_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:showIcon="@{viewModel.weatherLiveData.data.current.weatherDescriptions[0]}"
+                        app:weatherIconColor="@color/colorPrimary"
+                        app:weatherIconSize="150" />
+
+                    <TextView
+                        android:id="@+id/temperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_16"
+                        android:layout_marginTop="@dimen/dimen_16"
+                        android:text="@{String.valueOf(viewModel.weatherLiveData.data.current.temperature).concat(@string/tempC)}"
+                        android:textSize="@dimen/text_60"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/weather_icon"
+                        tools:text="12\u2103" />
+
+                    <TextView
+                        android:id="@+id/condition_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_32"
+                        android:maxEms="6"
+                        android:text="@{viewModel.weatherLiveData.data.current.weatherDescriptions[0]}"
+                        android:textSize="@dimen/text_25"
+                        app:layout_constraintStart_toStartOf="@+id/temperature"
+                        app:layout_constraintTop_toBottomOf="@+id/temperature"
+                        tools:text="Cloudy" />
+
+                    <TextView
+                        android:id="@+id/day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dimen_16"
+                        android:ellipsize="end"
+                        android:text="@{viewModel.weatherLiveData.data.weatherLocation.day}"
+                        android:textSize="@dimen/text_35"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/temperature"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        tools:text="Thursday" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                   ads:layout_constraintGuide_percent="0.7" />
+
+                <TextView
+                    android:id="@+id/precipitation_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(viewModel.weatherLiveData.data.current.precipitation) +`mm`}"
+                    android:textSize="@dimen/text_18"
+                    app:layout_constraintEnd_toStartOf="@+id/visibility_text"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/wind_text"
+                    app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+                <TextView
+                    android:id="@+id/precipitation_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_8"
+                    android:text="@string/precipitation"
+                    android:textSize="@dimen/text_18"
+                    app:layout_constraintEnd_toEndOf="@+id/precipitation_text"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="@+id/precipitation_text"
+                    app:layout_constraintTop_toBottomOf="@+id/precipitation_text" />
+
+                <TextView
+                    android:id="@+id/visibility_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_8"
+                    android:text="@{String.valueOf(viewModel.weatherLiveData.data.current.visibility) +`km`}"
+                    android:textSize="@dimen/text_18"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/precipitation_text"
+                    app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+                <TextView
+                    android:id="@+id/visibility_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_8"
+                    android:layout_marginTop="@dimen/dimen_8"
+                    android:text="@string/visibility"
+                    android:textSize="@dimen/text_18"
+                    app:layout_constraintEnd_toEndOf="@+id/visibility_text"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/precipitation_label"
+                    app:layout_constraintStart_toStartOf="@+id/visibility_text"
+                    app:layout_constraintTop_toBottomOf="@+id/visibility_text" />
+
+                <TextView
+                    android:id="@+id/wind_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_8"
+                    android:text="@string/wind"
+                    android:textSize="@dimen/text_18"
+                    app:layout_constraintEnd_toEndOf="@+id/wind_text"
+                    app:layout_constraintStart_toStartOf="@+id/wind_text"
+                    app:layout_constraintTop_toBottomOf="@+id/wind_text" />
+
+                <TextView
+                    android:id="@+id/wind_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(viewModel.weatherLiveData.data.current.windSpeed) +`kph`}"
+                    android:textSize="@dimen/text_18"
+                    app:layout_constraintEnd_toStartOf="@+id/precipitation_text"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/guideline3" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/label_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="wind_label, precipitation_label,visibility_label,wind_text,visibility_text,precipitation_text"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:visibleGone="@{viewModel.weatherLiveData.data != null}" />
+
+                <com.google.android.gms.ads.AdView
+                    android:id="@+id/ad_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="@string/banner_ad_unit_id"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/no_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_8"
+                    android:text="@string/data_fetch_failed"
+                    android:textSize="@dimen/text_16"
+                    app:layout_constraintBottom_toTopOf="@+id/progressBar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+                    app:showError="@{viewModel.weatherLiveData}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_begin="@dimen/guideline_margin" />
-
-            <TextView
-                android:id="@+id/precipitation_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{String.valueOf(weather.precipMm) +`mm`}"
-                android:textSize="@dimen/text_18"
-                app:layout_constraintEnd_toStartOf="@+id/visibility_text"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/wind_text"
-                app:layout_constraintTop_toTopOf="@+id/guideline3" />
-
-            <TextView
-                android:id="@+id/precipitation_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_8"
-                android:text="@string/precipitation"
-                android:textSize="@dimen/text_18"
-                app:layout_constraintEnd_toEndOf="@+id/precipitation_text"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/precipitation_text"
-                app:layout_constraintTop_toBottomOf="@+id/precipitation_text" />
-
-            <TextView
-                android:id="@+id/visibility_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dimen_8"
-                android:text="@{String.valueOf(weather.visKm) +`km`}"
-                android:textSize="@dimen/text_18"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/precipitation_text"
-                app:layout_constraintTop_toTopOf="@+id/guideline3" />
-
-            <TextView
-                android:id="@+id/visibility_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_8"
-                android:layout_marginTop="@dimen/dimen_8"
-                android:text="@string/visibility"
-                android:textSize="@dimen/text_18"
-                app:layout_constraintEnd_toEndOf="@+id/visibility_text"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/precipitation_label"
-                app:layout_constraintStart_toStartOf="@+id/visibility_text"
-                app:layout_constraintTop_toBottomOf="@+id/visibility_text" />
-
-            <TextView
-                android:id="@+id/wind_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_8"
-                android:text="@string/wind"
-                android:textSize="@dimen/text_18"
-                app:layout_constraintEnd_toEndOf="@+id/wind_text"
-                app:layout_constraintStart_toStartOf="@+id/wind_text"
-                app:layout_constraintTop_toBottomOf="@+id/wind_text" />
-
-            <TextView
-                android:id="@+id/wind_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{String.valueOf(weather.windKph) +`kph`}"
-                android:textSize="@dimen/text_18"
-                app:layout_constraintEnd_toStartOf="@+id/precipitation_text"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/guideline3" />
-
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/label_group"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="wind_label, precipitation_label,visibility_label,wind_text,visibility_text,precipitation_text"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:visibleGone="@{resource.data != null}" />
-
-            <com.google.android.gms.ads.AdView
-                android:id="@+id/ad_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                ads:adSize="BANNER"
-                ads:adUnitId="@string/banner_ad_unit_id"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/no_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dimen_8"
-                android:text="@string/data_fetch_failed"
-                android:textSize="@dimen/text_16"
-                app:layout_constraintBottom_toTopOf="@+id/progressBar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-                app:visibleGone="@{resource.data == null}" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

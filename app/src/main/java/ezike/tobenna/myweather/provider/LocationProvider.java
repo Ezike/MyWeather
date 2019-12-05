@@ -1,10 +1,12 @@
 package ezike.tobenna.myweather.provider;
 
+import org.jetbrains.annotations.NotNull;
+
 import ezike.tobenna.myweather.data.model.WeatherLocation;
 
 public interface LocationProvider {
 
-    boolean isLocationChanged(WeatherLocation location);
+    boolean isLocationChanged(WeatherLocation weatherLocation);
 
-    String getPreferredLocationString();
+    @NotNull  String getPreferredLocationString();
 }

@@ -1,28 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <import type="ezike.tobenna.myweather.utils.Status" />
-
         <variable
-            name="resource"
-            type="ezike.tobenna.myweather.utils.Resource" />
-
-        <variable
-            name="condition"
-            type="ezike.tobenna.myweather.data.model.Condition" />
-
-        <variable
-            name="location"
-            type="ezike.tobenna.myweather.data.model.WeatherLocation" />
-
-        <variable
-            name="weather"
-            type="ezike.tobenna.myweather.data.model.CurrentWeather" />
+            name="viewModel"
+            type="ezike.tobenna.myweather.ui.WeatherViewModel" />
 
     </data>
 
@@ -69,7 +55,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:visibleGone="@{resource.status == Status.LOADING}" />
+                app:showLoading="@{viewModel.weatherLiveData}" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -78,7 +64,7 @@
                 app:layout_constraintEnd_toStartOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:visibleGone="@{resource.data != null}">
+                app:showSuccess="@{viewModel.weatherLiveData}">
 
                 <com.github.pwittchen.weathericonview.WeatherIconView
                     android:id="@+id/weather_icon"
@@ -88,7 +74,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:showIcon="@{condition.text}"
+                    app:showIcon="@{viewModel.weatherLiveData.data.current.weatherDescriptions[0]}"
                     app:weatherIconColor="@color/colorPrimary"
                     app:weatherIconSize="140" />
 
@@ -98,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_16"
                     android:layout_marginTop="@dimen/dimen_16"
-                    android:text="@{String.valueOf(weather.tempC).concat(@string/tempC)}"
+                    android:text="@{String.valueOf(viewModel.weatherLiveData.data.current.temperature).concat(@string/tempC)}"
                     android:textSize="@dimen/text_60"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/weather_icon"
@@ -111,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_32"
                     android:maxEms="6"
-                    android:text="@{condition.text}"
+                    android:text="@{viewModel.weatherLiveData.data.current.weatherDescriptions[0]}"
                     android:textSize="@dimen/text_25"
                     app:layout_constraintStart_toStartOf="@+id/temperature"
                     app:layout_constraintTop_toBottomOf="@+id/temperature"
@@ -123,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/dimen_16"
                     android:ellipsize="end"
-                    android:text="@{location.day}"
+                    android:text="@{viewModel.weatherLiveData.data.weatherLocation.day}"
                     android:textSize="@dimen/text_40"
                     app:layout_constraintBaseline_toBaselineOf="@+id/temperature"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -142,7 +128,7 @@
                 android:id="@+id/precipitation_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(weather.precipMm) +` mm`}"
+                android:text="@{String.valueOf(viewModel.weatherLiveData.data.current.precipitation) +` mm`}"
                 android:textSize="@dimen/text_18"
                 app:layout_constraintEnd_toStartOf="@+id/visibility_text"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -166,7 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dimen_8"
-                android:text="@{String.valueOf(weather.visKm) +` km`}"
+                android:text="@{String.valueOf(viewModel.weatherLiveData.data.current.visibility) +` km`}"
                 android:textSize="@dimen/text_18"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -202,7 +188,7 @@
                 android:id="@+id/wind_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(weather.windKph) +` kph`}"
+                android:text="@{String.valueOf(viewModel.weatherLiveData.data.current.windSpeed) +` kph`}"
                 android:textSize="@dimen/text_18"
                 app:layout_constraintEnd_toStartOf="@+id/precipitation_text"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -218,7 +204,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:visibleGone="@{resource.data != null}" />
+                app:visibleGone="@{viewModel.weatherLiveData.data != null}" />
 
             <com.google.android.gms.ads.AdView
                 android:id="@+id/ad_view"
@@ -240,7 +226,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/progressBar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:visibleGone="@{resource.data == null}" />
+                app:showError="@{viewModel.weatherLiveData}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

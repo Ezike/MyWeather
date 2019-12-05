@@ -1,9 +1,10 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
-apply plugin: "androidx.navigation.safeargs"
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'io.fabric'
+apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     signingConfigs {
@@ -14,7 +15,7 @@ android {
             storePassword '123456'
         }
     }
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "ezike.tobenna.myweather"
         minSdkVersion 19
@@ -26,14 +27,14 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField 'String', "ApiKey", ApiXuKey
-            resValue 'string', "api_key", ApiXuKey
+            buildConfigField 'String', "ApiKey", "\"c1b490e5810e7515ef5bdcf47f8497ad\""
+            resValue 'string', "api_key", "c1b490e5810e7515ef5bdcf47f8497ad"
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField 'String', "ApiKey", ApiXuKey
-            resValue 'string', "api_key", ApiXuKey
+            buildConfigField 'String', "ApiKey", "c1b490e5810e7515ef5bdcf47f8497ad"
+            resValue 'string', "api_key", "c1b490e5810e7515ef5bdcf47f8497ad"
             signingConfig signingConfigs.keyWeather
         }
     }
@@ -45,40 +46,54 @@ android {
     defaultConfig {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree (include: ['*.jar'], dir: 'libs')
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation "androidx.annotation:annotation:$annotation_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
 
+    implementation "androidx.fragment:fragment-ktx:$fragment_version"
+
     // Navigation
-    implementation "androidx.navigation:navigation-fragment:$nav_version"
-    implementation "androidx.navigation:navigation-ui:$nav_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     // Viewmodel and livedata
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 
     // Legacy support
     implementation "androidx.legacy:legacy-support-v4:$legacy_support_version"
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
     // Room
-    implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
     // Material Design Library
     implementation "com.google.android.material:material:$material_version"
 
     // Dagger core
     implementation "com.google.dagger:dagger:$dagger_version"
-    annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     //Dagger Android
     implementation "com.google.dagger:dagger-android:$dagger_version"
     implementation "com.google.dagger:dagger-android-support:$dagger_version"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
 
     // Google Ad
     implementation "com.google.android.gms:play-services-ads:$ads_version"
@@ -101,16 +116,18 @@ dependencies {
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$coroutines_call_adapter_version"
 
     // Moshi
-    implementation "com.squareup.moshi:moshi:$moshi_version"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.9.2"
 
     // OkHttp3
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 
     // Glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
-    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
 
     // Timber
     implementation "com.jakewharton.timber:timber:$timber_version"
@@ -124,13 +141,9 @@ dependencies {
     // Test
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test:rules:$rules_version"
-    androidTestImplementation "androidx.test.ext:junit:$core_version"
     androidTestImplementation "androidx.test:core:$core_version"
     androidTestImplementation "org.hamcrest:hamcrest-library:$hamcrest_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'androidx.cardview:cardview:1.0.0'
-}
-repositories {
-    mavenCentral()
 }

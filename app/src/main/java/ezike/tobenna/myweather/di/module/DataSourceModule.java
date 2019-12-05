@@ -1,16 +1,13 @@
 package ezike.tobenna.myweather.di.module;
 
-import androidx.lifecycle.LiveData;
 import dagger.Binds;
 import dagger.Module;
 import ezike.tobenna.myweather.data.local.LocalDataSource;
 import ezike.tobenna.myweather.data.local.LocalDataSourceImpl;
-import ezike.tobenna.myweather.data.local.entity.WeatherResponse;
-import ezike.tobenna.myweather.data.remote.RemoteSourceImpl;
-import ezike.tobenna.myweather.data.source.BaseSource;
+import ezike.tobenna.myweather.data.remote.RemoteImpl;
+import ezike.tobenna.myweather.data.remote.RemoteSource;
+import ezike.tobenna.myweather.repository.Repository;
 import ezike.tobenna.myweather.repository.WeatherRepository;
-import ezike.tobenna.myweather.repository.WeatherRepositoryImpl;
-import ezike.tobenna.myweather.utils.Resource;
 
 @Module
 public abstract class DataSourceModule {
@@ -19,9 +16,9 @@ public abstract class DataSourceModule {
     abstract LocalDataSource provideDataSource(LocalDataSourceImpl localDataSource);
 
     @Binds
-    abstract BaseSource provideBaseSource(RemoteSourceImpl remoteSource);
+    abstract Repository provideRepoImpl(WeatherRepository repo);
 
     @Binds
-    abstract WeatherRepository<LiveData<Resource<WeatherResponse>>> provideRepoImpl(WeatherRepositoryImpl repo);
+    abstract RemoteSource provideRemoteImpl(RemoteImpl remote);
 }
 

@@ -8,8 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.room.Room;
 import dagger.Module;
 import dagger.Provides;
-import ezike.tobenna.myweather.data.local.WeatherDatabase;
-import ezike.tobenna.myweather.data.local.dao.WeatherDao;
+import ezike.tobenna.myweather.data.local.db.WeatherDao;
+import ezike.tobenna.myweather.data.local.db.WeatherDatabase;
 
 
 /**

@@ -1,31 +1,33 @@
 package ezike.tobenna.myweather;
 
-import android.app.Activity;
+import androidx.multidex.MultiDexApplication;
+import androidx.preference.PreferenceManager;
 
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import javax.inject.Inject;
 
-import androidx.multidex.MultiDexApplication;
-import androidx.preference.PreferenceManager;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
-import dagger.android.HasActivityInjector;
-import ezike.tobenna.myweather.di.AppInjector;
+import dagger.android.HasAndroidInjector;
+import ezike.tobenna.myweather.di.DaggerAppComponent;
 import timber.log.Timber;
 
 /**
  * @author tobennaezike
  */
-public class WeatherApplication extends MultiDexApplication implements HasActivityInjector {
+public class WeatherApplication extends MultiDexApplication implements HasAndroidInjector {
 
     @Inject
-    DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
+    DispatchingAndroidInjector<Object> dispatchingAndroidInjector;
 
     @Override
     public void onCreate() {
-
-        AppInjector.init(this);
+        DaggerAppComponent
+                .builder()
+                .application(this)
+                .build()
+                .inject(this);
 
         super.onCreate();
         if (BuildConfig.DEBUG) {
@@ -39,7 +41,7 @@ public class WeatherApplication extends MultiDexApplication implements HasActivi
     }
 
     @Override
-    public AndroidInjector<Activity> activityInjector() {
+    public AndroidInjector<Object> androidInjector() {
         return dispatchingAndroidInjector;
     }
 }
