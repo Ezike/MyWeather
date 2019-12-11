@@ -5,5 +5,5 @@ import ezike.tobenna.myweather.data.model.WeatherResponse
 import kotlinx.coroutines.flow.Flow
 
 interface Repository {
-    suspend fun fetchWeather(): Flow<Resource<WeatherResponse>>
+    fun fetchWeather(): Flow<Resource<WeatherResponse>>
 }

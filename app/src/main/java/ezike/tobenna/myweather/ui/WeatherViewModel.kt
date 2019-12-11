@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import ezike.tobenna.myweather.data.Resource
 import ezike.tobenna.myweather.data.model.WeatherResponse
 import ezike.tobenna.myweather.repository.Repository
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,7 +24,7 @@ class WeatherViewModel @Inject constructor(private val repository: Repository)
     fun fetchData() {
         viewModelScope.launch {
             repository.fetchWeather().collect {
-                _weatherLiveData.postValue(it)
+                _weatherLiveData.value = it
             }
         }
     }

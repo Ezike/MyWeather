@@ -29,7 +29,7 @@ class WeatherRepository @Inject constructor(
 ) : Repository {
 
     @ExperimentalCoroutinesApi
-    override suspend fun fetchWeather(): Flow<Resource<WeatherResponse>> {
+    override fun fetchWeather(): Flow<Resource<WeatherResponse>> {
         return flow {
             val initial: WeatherResponse = localDataSource.getWeather()
             emit(Resource.Loading(data = initial))
@@ -41,8 +41,7 @@ class WeatherRepository @Inject constructor(
         }.catch {
             emit(Resource.Error(it))
             it.printStackTrace()
-        }
-                .flowOn(dispatcher)
+        }.flowOn(dispatcher)
     }
 
     private suspend fun updateWidgetData(weather: WeatherResponse) {
@@ -60,7 +59,6 @@ class WeatherRepository @Inject constructor(
                     editor.putString(WIDGET_ICON, weather.current.weatherDescriptions[0])
                     editor.apply()
                 }
-                Timber.d(sharedPreferences.getString(WIDGET_TEXT, "none saved"))
             }
         }
     }
