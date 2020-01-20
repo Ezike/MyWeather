@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.3.60-eap-25'
+    ext.kotlin_version = '1.3.61'
     ext.nav_version = '2.0.0'
 
     repositories {
@@ -15,12 +15,11 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.0-alpha04'
+        classpath 'com.android.tools.build:gradle:4.0.0-alpha08'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
         classpath 'com.google.gms:google-services:4.3.3'
         classpath 'io.fabric.tools:gradle:1.31.2'
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
     }
 }
 
@@ -33,43 +32,159 @@ allprojects {
     }
 }
 
-ext{
-    // Google
-    room_version = '2.2.2'
-    lifecycle_version = '2.2.0-rc02'
-    constraint_layout_version = "1.1.3"
-    annotation_version = '1.1.0'
-    appcompat_version = '1.1.0'
-    material_version = "1.0.0"
-    dagger_version = '2.25.2'
-    preference_version = '1.1.0'
-    location_version = '17.0.0'
-    nav_version = '2.2.0-rc02'
-    legacy_support_version = "1.0.0"
-    ads_version = '18.3.0'
-    multi_dex_version = "1.0.3"
-    firebase_version = '17.2.1'
-    crashlytics_version = '2.10.1'
-    coroutines_version = '1.3.2'
-    coroutines_call_adapter_version = '0.9.2'
+ext {
 
-    // Third party
-    retrofit_version = '2.6.2'
-    glide_version = '4.10.0'
-    timber_version = "4.7.1"
-    threetenabp_version = '1.2.1'
-    moshi_version = '1.9.2'
-    okhttp_version = '4.2.2'
-    weather_icon_version = "1.1.0"
+    // global variables
+    compile_sdk_version = 29
+    kotlin_version = '1.3.61'
+    min_sdk_version = 21
 
-    // Testing
-    junit_version = "4.12"
-    espresso_version = '3.2.0'
-    rules_version = '1.2.0'
-    core_version = '1.2.0'
-    hamcrest_version = '2.2'
-    fragment_version = '1.1.0'
+    // local variables (use def)
+    def androidx_test_version = '1.2.0'
+    def appcompat_version = '1.1.0'
+    def constraint_layout_version = '1.1.3'
+    def coroutines_android_version = '1.3.3'
+    def expresso_version = '3.2.0'
+    def glide_version = '4.11.0'
+    def junit_version = '4.13'
+    def lifecycle_version = '2.1.0'
+    def livedata_version = '2.2.0-rc03'
+    def material_version = '1.2.0-alpha03'
+    def retrofit_version = '2.7.1'
+    def room_version = '2.2.3'
+    def truth_version = '1.0.1'
+    def moshiCodeGen = '1.9.2'
+    def timber_version = "4.7.1"
+    def threetenabp_version = '1.2.2'
+    def moshi_version = '1.9.2'
+    def okhttp_version = '4.3.1'
+    def weather_icon_version = "1.1.0"
+    def dagger_version = '2.25.4'
+    def preference_version = '1.1.0'
+    def location_version = '17.0.0'
+    def nav_version = '2.2.0-rc04'
+    def ads_version = '18.3.0'
+    def multi_dex_version = "1.0.3"
+    def firebase_version = '17.2.1'
+    def crashlytics_version = '2.10.1'
+    def card_view_version = '1.0.0'
+    def fragment_version = '1.1.0'
 
+
+    libraries = [
+            // Kotlin standard library
+            "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+
+            // Coroutines
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_android_version",
+            "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutines_android_version}",
+
+            // Android UI and appcompat
+            "androidx.appcompat:appcompat:$appcompat_version",
+            "com.google.android.material:material:$material_version",
+            "androidx.constraintlayout:constraintlayout:$constraint_layout_version",
+            "androidx.fragment:fragment-ktx:$fragment_version",
+            "androidx.cardview:cardview:$card_view_version",
+
+            // Glide
+            "com.github.bumptech.glide:glide:$glide_version",
+
+            // ViewModel and LiveData
+            "androidx.lifecycle:lifecycle-extensions:$lifecycle_version",
+            "androidx.lifecycle:lifecycle-livedata-ktx:$livedata_version",
+            "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version",
+
+            // network & serialization
+            "com.squareup.retrofit2:retrofit:$retrofit_version",
+            "com.squareup.retrofit2:converter-moshi:$retrofit_version",
+
+            // navigation
+            "androidx.navigation:navigation-fragment-ktx:$nav_version",
+            "androidx.navigation:navigation-ui-ktx:$nav_version",
+
+            // Dagger core
+            "com.google.dagger:dagger:$dagger_version",
+
+            //Dagger Android
+            "com.google.dagger:dagger-android:$dagger_version",
+            "com.google.dagger:dagger-android-support:$dagger_version",
+
+            // Google Ad
+            "com.google.android.gms:play-services-ads:$ads_version",
+
+            // Firebase
+            "com.google.firebase:firebase-core:$firebase_version",
+
+            //Crashlytics
+            "com.crashlytics.sdk.android:crashlytics:$crashlytics_version",
+
+            // ThreeTenAbp
+            "com.jakewharton.threetenabp:threetenabp:$threetenabp_version",
+
+            // Preference
+            "androidx.preference:preference:$preference_version",
+
+            // Location
+            "com.google.android.gms:play-services-location:$location_version",
+
+            // Moshi
+            "com.squareup.moshi:moshi-kotlin:$moshi_version",
+
+            // OkHttp3
+            "com.squareup.okhttp3:logging-interceptor:$okhttp_version",
+
+            // Timber
+            "com.jakewharton.timber:timber:$timber_version",
+
+            // Weather icons
+            "com.github.pwittchen:weathericonview:$weather_icon_version",
+
+            // MultiDex
+            "com.android.support:multidex:$multi_dex_version",
+
+    ]
+
+    arch_libraries = [
+            // Room for database
+            "androidx.room:room-ktx:$room_version"
+    ]
+
+    librariesKapt = [
+            "androidx.room:room-compiler:$room_version",
+            "com.github.bumptech.glide:compiler:$glide_version",
+            "com.squareup.moshi:moshi-kotlin-codegen:$moshiCodeGen",
+            "com.google.dagger:dagger-compiler:$dagger_version",
+            "com.google.dagger:dagger-android-processor:$dagger_version",
+    ]
+
+    testLibraries = [
+            "junit:junit:$junit_version",
+            // Coroutines testing
+            "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_android_version",
+
+            // mocks
+            'org.mockito:mockito-core:3.2.4',
+
+            //  Architecture Components testing libraries
+            "androidx.arch.core:core-testing:$lifecycle_version",
+
+            "com.google.truth:truth:$truth_version",
+    ]
+
+    androidTestLibraries = [
+            "junit:junit:$junit_version",
+            "androidx.test:runner:$androidx_test_version",
+            "androidx.test:rules:$androidx_test_version",
+
+            // Espresso
+            "androidx.test.espresso:espresso-core:$expresso_version",
+            "androidx.test.espresso:espresso-contrib:$expresso_version",
+            "androidx.test.espresso:espresso-intents:$expresso_version",
+
+            //  Architecture Components testing libraries
+            "androidx.arch.core:core-testing:$lifecycle_version",
+
+    ]
 }
 
 task clean(type: Delete) {

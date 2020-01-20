@@ -2,25 +2,21 @@ package ezike.tobenna.myweather.repository
 
 import android.content.Context
 import android.content.SharedPreferences
+import ezike.tobenna.myweather.AppCoroutineDispatchers
 import ezike.tobenna.myweather.data.Resource
 import ezike.tobenna.myweather.data.local.LocalDataSource
 import ezike.tobenna.myweather.data.model.WeatherResponse
 import ezike.tobenna.myweather.data.remote.RemoteSource
 import ezike.tobenna.myweather.provider.LocationProvider
 import ezike.tobenna.myweather.widget.WeatherWidgetProvider
-import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.launch
-import timber.log.Timber
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class WeatherRepository @Inject constructor(
-        private val dispatcher: CoroutineDispatcher,
+        private val dispatcher: AppCoroutineDispatchers,
         private val remoteSource: RemoteSource,
         private val localDataSource: LocalDataSource,
         private val locationProvider: LocationProvider,
@@ -31,35 +27,36 @@ class WeatherRepository @Inject constructor(
     @ExperimentalCoroutinesApi
     override fun fetchWeather(): Flow<Resource<WeatherResponse>> {
         return flow {
-            val initial: WeatherResponse = localDataSource.getWeather()
-            emit(Resource.Loading(data = initial))
-            val weather: WeatherResponse = remoteSource.fetchWeather(locationProvider.preferredLocationString)
-            localDataSource.save(weather)
-            val savedData: WeatherResponse = localDataSource.getWeather()
-            updateWidgetData(savedData)
-            emit(Resource.Success(data = savedData))
+            val currentData: WeatherResponse = localDataSource.getWeather().first()
+            emit(Resource.Loading(currentData))
+            fetchWeatherAndCache()
+            emitAll(localDataSource.getWeather().map { Resource.Success(it) })
         }.catch {
-            emit(Resource.Error(it))
+            val previousData: WeatherResponse = localDataSource.getWeather().first()
+            emit(Resource.Error(it, previousData))
             it.printStackTrace()
-        }.flowOn(dispatcher)
+        }.flowOn(dispatcher.io)
     }
 
-    private suspend fun updateWidgetData(weather: WeatherResponse) {
+    private fun updateWidgetData(weather: WeatherResponse) {
         saveToPreferences(weather)
         WeatherWidgetProvider.updateWidget(context)
     }
 
-    private suspend fun saveToPreferences(weather: WeatherResponse) {
-        coroutineScope {
-            launch {
-                val editor = sharedPreferences.edit()
-                if (weather.current.weatherDescriptions.isNotEmpty()) {
-                    editor.putString(WIDGET_TEXT, weather.current.weatherDescriptions[0])
-                    editor.putString(WIDGET_LOCATION, weather.weatherLocation.region)
-                    editor.putString(WIDGET_ICON, weather.current.weatherDescriptions[0])
-                    editor.apply()
-                }
-            }
+    private suspend fun fetchWeatherAndCache() {
+        val weather: WeatherResponse = remoteSource
+                .fetchWeather(locationProvider.preferredLocationString)
+        localDataSource.save(weather)
+        updateWidgetData(weather)
+    }
+
+    private fun saveToPreferences(weather: WeatherResponse) {
+        val editor = sharedPreferences.edit()
+        if (weather.current.weatherDescriptions.isNotEmpty()) {
+            editor.putString(WIDGET_TEXT, weather.current.weatherDescriptions[0])
+            editor.putString(WIDGET_LOCATION, weather.weatherLocation.region)
+            editor.putString(WIDGET_ICON, weather.current.weatherDescriptions[0])
+            editor.apply()
         }
     }
 

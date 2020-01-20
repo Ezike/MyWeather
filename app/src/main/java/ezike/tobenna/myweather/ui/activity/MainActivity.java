@@ -64,11 +64,7 @@ public class MainActivity extends AppCompatActivity  {
 
         setSupportActionBar(binding.toolbar);
 
-        binding.toolbar.setTitle("");
-
         mNavController = Navigation.findNavController(this, R.id.nav_host_fragment);
-
-        NavigationUI.setupActionBarWithNavController(this, mNavController);
 
         NavigationUI.setupWithNavController(binding.bottomNav, mNavController);
 

@@ -59,7 +59,7 @@ public class WeatherWidgetProvider extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
-    public static void updateWidget(Context context) {
+    public static void updateWidget(@NonNull Context context) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, WeatherWidgetProvider.class));
         for (int appWidgetId : appWidgetIds) {

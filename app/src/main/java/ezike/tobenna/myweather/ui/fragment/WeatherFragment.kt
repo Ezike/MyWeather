@@ -6,10 +6,10 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider.Factory
+import androidx.lifecycle.observe
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.AndroidSupportInjection
@@ -17,8 +17,14 @@ import ezike.tobenna.myweather.R
 import ezike.tobenna.myweather.databinding.FragmentWeatherBinding
 import ezike.tobenna.myweather.ui.WeatherViewModel
 import ezike.tobenna.myweather.utils.Utilities
+import ezike.tobenna.myweather.utils.actionBar
+import ezike.tobenna.myweather.utils.toolbarTitle
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
+@FlowPreview
 class WeatherFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
@@ -36,19 +42,28 @@ class WeatherFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather, container, false)
+        binding = FragmentWeatherBinding.inflate(inflater, container, false).apply {
+            viewModel = weatherViewmodel
+            lifecycleOwner = viewLifecycleOwner
+        }
         return binding.getRoot()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.viewModel = weatherViewmodel
-        binding.lifecycleOwner = viewLifecycleOwner
         binding.swipeRefresh.setOnRefreshListener(this)
         binding.swipeRefresh.setColorSchemeColors(
                 ContextCompat.getColor(requireContext(), R.color.colorPrimary),
                 ContextCompat.getColor(requireContext(), R.color.colorAccent),
                 ContextCompat.getColor(requireContext(), R.color.colorPrimaryDark))
+
+        setActionBarTitle()
+    }
+
+    private fun setActionBarTitle() {
+        weatherViewmodel.weatherLiveData.observe(this) {
+            actionBar?.toolbarTitle = it.data?.weatherLocation?.name
+        }
     }
 
     private fun showSnackBar(message: String, listener: OnClickListener) {

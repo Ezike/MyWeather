@@ -3,7 +3,6 @@ package ezike.tobenna.myweather.provider;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Location;
-import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -14,9 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
 
-import ezike.tobenna.myweather.R;
 import ezike.tobenna.myweather.data.model.WeatherLocation;
-import ezike.tobenna.myweather.utils.Utilities;
 import timber.log.Timber;
 
 public class LocationProviderImpl extends PreferenceProvider implements LocationProvider, OnSuccessListener<Location> {
@@ -24,8 +21,6 @@ public class LocationProviderImpl extends PreferenceProvider implements Location
     private static final String USE_DEVICE_LOCATION = "USE_DEVICE_LOCATION";
 
     private static final String CUSTOM_LOCATION = "CUSTOM_LOCATION";
-
-    private Context mContext;
 
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
@@ -35,7 +30,6 @@ public class LocationProviderImpl extends PreferenceProvider implements Location
     LocationProviderImpl(Context context, FusedLocationProviderClient client) {
         super(context);
         mFusedLocationProviderClient = client;
-        mContext = context;
     }
 
     @Override
@@ -48,15 +42,14 @@ public class LocationProviderImpl extends PreferenceProvider implements Location
     @Override
     public String getPreferredLocationString() {
         if (isUsingDeviceLocation()) {
-
             if (getLastDeviceLocation() == null) {
-                    return getCustomLocationName();
-                } else {
+                return getCustomLocationName();
+            } else {
                 String latitude = String.valueOf(getLastDeviceLocation().getLatitude());
                 String longitude = String.valueOf(getLastDeviceLocation().getLongitude());
                 Timber.d("Coordinates %s,%s", latitude, longitude);
-                    return (latitude + ":" + longitude);
-                }
+                return (latitude + "," + longitude);
+            }
         } else {
             return getCustomLocationName();
         }

@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="ezike.tobenna.myweather.data.Resource"/>
+
         <variable
             name="viewModel"
             type="ezike.tobenna.myweather.ui.WeatherViewModel" />
@@ -64,7 +66,7 @@
                 app:layout_constraintEnd_toStartOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:showSuccess="@{viewModel.weatherLiveData}">
+                app:showSuccess="@{viewModel.weatherLiveData.data != null}">
 
                 <com.github.pwittchen.weathericonview.WeatherIconView
                     android:id="@+id/weather_icon"
@@ -84,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_16"
                     android:layout_marginTop="@dimen/dimen_16"
-                    android:text="@{String.valueOf(viewModel.weatherLiveData.data.current.temperature).concat(@string/tempC)}"
+                    android:text="@{String.valueOf(viewModel.weatherLiveData.S.data.current.temperature).concat(@string/tempC)}"
                     android:textSize="@dimen/text_60"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/weather_icon"

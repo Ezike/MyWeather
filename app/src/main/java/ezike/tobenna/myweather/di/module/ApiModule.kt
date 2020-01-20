@@ -1,16 +1,15 @@
 package ezike.tobenna.myweather.di.module
 
 import android.app.Application
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
+import ezike.tobenna.myweather.AppCoroutineDispatchers
+import ezike.tobenna.myweather.BuildConfig
 import ezike.tobenna.myweather.data.remote.api.ApiService
 import ezike.tobenna.myweather.data.remote.interceptors.ConnectivityInterceptor
 import ezike.tobenna.myweather.data.remote.interceptors.RequestInterceptor
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.OkHttpClient.Builder
@@ -39,15 +38,24 @@ object ApiModule {
     @Provides
     @Singleton
     internal fun provideOkHttpClient(cache: Cache, connectivityInterceptor: ConnectivityInterceptor,
-                                     requestInterceptor: RequestInterceptor): OkHttpClient {
-        val logging = HttpLoggingInterceptor()
-        logging.level = Level.BODY
+                                     requestInterceptor: RequestInterceptor,
+                                     logger: HttpLoggingInterceptor): OkHttpClient {
         val httpClient = Builder()
         httpClient.cache(cache)
-        httpClient.addInterceptor(logging)
+        httpClient.addInterceptor(logger)
         httpClient.addNetworkInterceptor(requestInterceptor)
         httpClient.addInterceptor(connectivityInterceptor)
         return httpClient.build()
+    }
+
+    @Provides
+    @Singleton
+    internal fun provideOkHttpLogger(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().apply {
+            if (BuildConfig.DEBUG) {
+                level = Level.BODY
+            }
+        }
     }
 
     @Provides
@@ -62,16 +70,15 @@ object ApiModule {
     internal fun provideApiService(moshi: Moshi, okHttpClient: OkHttpClient): ApiService {
         return Retrofit
                 .Builder()
-                .baseUrl("http://api.weatherstack.com/")
+                .baseUrl(BuildConfig.BaseUrl)
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .client(okHttpClient)
                 .build()
                 .create(ApiService::class.java)
     }
 
     @Provides
-    fun provideDispatcher(): CoroutineDispatcher {
-        return Dispatchers.IO
+    fun provideDispatcher(): AppCoroutineDispatchers {
+        return AppCoroutineDispatchers()
     }
 }

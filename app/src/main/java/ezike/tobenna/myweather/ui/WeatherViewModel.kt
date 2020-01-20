@@ -1,31 +1,39 @@
 package ezike.tobenna.myweather.ui
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import ezike.tobenna.myweather.data.Resource
 import ezike.tobenna.myweather.data.model.WeatherResponse
 import ezike.tobenna.myweather.repository.Repository
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class WeatherViewModel @Inject constructor(private val repository: Repository)
-    : ViewModel() {
+@FlowPreview
+@ExperimentalCoroutinesApi
+class WeatherViewModel @Inject constructor(repository: Repository)
+    : ViewModel(), Repository by repository {
 
-    private val _weatherLiveData = MutableLiveData<Resource<WeatherResponse>>()
-    val weatherLiveData: LiveData<Resource<WeatherResponse>> = _weatherLiveData
+    private val channel = ConflatedBroadcastChannel<Resource<WeatherResponse>>(Resource.Loading())
+    val weatherLiveData: LiveData<Resource<WeatherResponse>> = channel.asFlow().asLiveData()
 
     init {
         fetchData()
     }
 
     fun fetchData() {
-        viewModelScope.launch {
-            repository.fetchWeather().collect {
-                _weatherLiveData.value = it
-            }
-        }
+        fetchWeather()
+                .onEach {
+                    channel.offer(it)
+                }.catch {
+                    channel.offer(Resource.Error(it))
+                }.launchIn(viewModelScope)
     }
 }

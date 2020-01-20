@@ -2,6 +2,7 @@ package ezike.tobenna.myweather.ui
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.github.pwittchen.weathericonview.WeatherIconView
@@ -9,6 +10,8 @@ import ezike.tobenna.myweather.R
 import ezike.tobenna.myweather.data.Resource
 import ezike.tobenna.myweather.data.model.WeatherResponse
 import ezike.tobenna.myweather.utils.WeatherIconUtils
+import ezike.tobenna.myweather.utils.visible
+import java.io.IOException
 
 /**
  * @author tobennaezike
@@ -37,17 +40,20 @@ fun View.showLoading(resource: Resource<WeatherResponse>?) {
 }
 
 @BindingAdapter("showSuccess")
-fun View.showSuccess(resource: Resource<WeatherResponse>?) {
-    when (resource) {
-        is Resource.Success -> visibility == View.VISIBLE
-        else -> visibility == View.GONE
-    }
+fun View.showSuccess(boolean: Boolean) {
+    visible = boolean
 }
 
 @BindingAdapter("showError")
-fun View.showError(resource: Resource<WeatherResponse>?) {
+fun TextView.showError(resource: Resource<WeatherResponse>?) {
     when (resource) {
-        is Resource.Error -> visibility == View.VISIBLE
+        is Resource.Error -> {
+            visible = true
+            text = if (resource.error is IOException) {
+                context.getString(R.string.data_fetch_failed)
+            } else resource.error.localizedMessage
+            return
+        }
         else -> visibility == View.GONE
     }
 }
